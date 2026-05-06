@@ -43,6 +43,11 @@ const questions = [
     ],
   },
   {
+    q: "Em qual lugar você gostaria de começar a evoluir o seu glúteo?",
+    options: ["🏡 Em casa", "🏋️ Na academia"],
+    note: "Dentro do método você encontra o guia com passo a passo para evoluir seu glúteo em casa ou na academia.",
+  },
+  {
     q: "Por que você acha que ainda não teve resultado?",
     options: [
       "🧬 Acho que é genética",
@@ -120,12 +125,12 @@ export default function Quiz() {
       return;
     }
 
-    if (idx === 3) {
+    if (questions[idx]?.note) {
       setShowNote(true);
       setTimeout(() => {
         setShowNote(false);
         goToQuestion(idx + 1);
-      }, 2200);
+      }, 3000);
       return;
     }
     goToQuestion(idx + 1);
@@ -160,7 +165,7 @@ export default function Quiz() {
             onSelect={(opt) => answer(step.index, opt)}
             current={step.index + 1}
             total={questions.length}
-            showNote={showNote && step.index === 3}
+            showNote={showNote}
           />
         )}
 
