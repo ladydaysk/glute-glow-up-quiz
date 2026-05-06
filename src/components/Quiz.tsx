@@ -199,6 +199,60 @@ export default function Quiz() {
   );
 }
 
+function TransformView({ onNext }: { onNext: () => void }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % transformImages.length), 2800);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="animate-slide-up flex flex-col">
+      <h2 className="text-xl sm:text-2xl font-bold text-center mb-4 text-foreground leading-snug">
+        Mais de <span className="text-primary">500 mulheres</span> já transformaram o corpo com o Método <span className="text-primary">LadyDaysk</span>
+      </h2>
+
+      <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-[var(--shadow-card)] bg-card mb-3">
+        {transformImages.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`Transformação ${i + 1}`}
+            loading="lazy"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              i === idx ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+
+      <div className="flex justify-center gap-2 mb-5">
+        {transformImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIdx(i)}
+            aria-label={`Imagem ${i + 1}`}
+            className={`h-2 rounded-full transition-all ${
+              i === idx ? "w-8 bg-primary" : "w-2 bg-nude"
+            }`}
+          />
+        ))}
+      </div>
+
+      <p className="text-center text-2xl font-bold text-foreground mb-5">
+        Quando será <span className="text-primary">você?</span>
+      </p>
+
+      <button
+        onClick={onNext}
+        className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform"
+        style={{ background: "var(--gradient-primary)" }}
+      >
+        CONTINUAR →
+      </button>
+    </div>
+  );
+}
+
 function Intro({ onStart, counter }: { onStart: () => void; counter: number }) {
   return (
     <div className="flex flex-col items-center text-center pt-10 animate-fade-in">
