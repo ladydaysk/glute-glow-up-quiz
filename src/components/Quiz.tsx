@@ -10,7 +10,7 @@ type Step =
   | { kind: "intro" }
   | { kind: "question"; index: number }
   | { kind: "transform" }
-  | { kind: "body" }
+  
   | { kind: "name" }
   | { kind: "result" }
   | { kind: "social" }
@@ -201,40 +201,6 @@ export default function Quiz() {
   );
 }
 
-function BodyView({ onSelect }: { onSelect: (label: string) => void }) {
-  const [picked, setPicked] = useState<string | null>(null);
-  return (
-    <div className="animate-slide-up">
-      <h2 className="text-2xl font-bold text-center mb-6 text-foreground leading-snug">
-        Qual desses corpos te <span className="text-primary">define?</span>
-      </h2>
-      <div className="grid grid-cols-2 gap-3">
-        {bodyOptions.map((b) => {
-          const active = picked === b.label;
-          return (
-            <button
-              key={b.label}
-              onClick={() => {
-                setPicked(b.label);
-                setTimeout(() => onSelect(b.label), 250);
-              }}
-              className={`bg-card rounded-2xl p-2 border-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
-                active ? "border-primary shadow-[var(--shadow-soft)]" : "border-border hover:border-primary/40"
-              }`}
-            >
-              <img
-                src={b.src}
-                alt={b.label}
-                loading="lazy"
-                className="w-full h-44 object-contain"
-              />
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
 
 function TransformView({ onNext }: { onNext: () => void }) {
   const [idx, setIdx] = useState(0);
