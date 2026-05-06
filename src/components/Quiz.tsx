@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { trackMetaEvent } from "@/lib/meta-pixel";
 import ba1 from "@/assets/transform/before-after-1.jpg";
 import ba2 from "@/assets/transform/before-after-2.jpg";
 import ba3 from "@/assets/transform/before-after-3.jpg";
@@ -87,6 +88,7 @@ export default function Quiz() {
   const [counter, setCounter] = useState(500);
   useEffect(() => {
     setCounter(487 + Math.floor(Math.random() * 60));
+    trackMetaEvent("PageView");
   }, []);
   const [testIndex, setTestIndex] = useState(0);
 
@@ -477,6 +479,9 @@ function SocialView({
 }
 
 function OfferView({ name }: { name: string }) {
+  useEffect(() => {
+    trackMetaEvent("ViewContent", { content_name: "Quiz Offer" });
+  }, []);
   const items = [
     "Treinos passo a passo (academia e casa)",
     "Método focado em ativação de glúteo",
