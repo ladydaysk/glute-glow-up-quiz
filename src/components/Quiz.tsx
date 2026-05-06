@@ -3,13 +3,24 @@ import ba1 from "@/assets/transform/before-after-1.jpg";
 import ba2 from "@/assets/transform/before-after-2.jpg";
 import ba3 from "@/assets/transform/before-after-3.jpg";
 import ba4 from "@/assets/transform/before-after-4.jpg";
+import body1 from "@/assets/bodies/body-1.png";
+import body2 from "@/assets/bodies/body-2.png";
+import body3 from "@/assets/bodies/body-3.png";
+import body4 from "@/assets/bodies/body-4.png";
 
 const transformImages = [ba1, ba2, ba3, ba4];
+const bodyOptions = [
+  { src: body1, label: "Bem magrinha" },
+  { src: body2, label: "Magra com leve definição" },
+  { src: body3, label: "Mais definida" },
+  { src: body4, label: "Magrinha com barriguinha" },
+];
 
 type Step =
   | { kind: "intro" }
   | { kind: "question"; index: number }
   | { kind: "transform" }
+  | { kind: "body" }
   | { kind: "name" }
   | { kind: "result" }
   | { kind: "social" }
@@ -163,7 +174,11 @@ export default function Quiz() {
         )}
 
         {step.kind === "transform" && (
-          <TransformView onNext={() => setStep({ kind: "question", index: 1 })} />
+          <TransformView onNext={() => setStep({ kind: "body" })} />
+        )}
+
+        {step.kind === "body" && (
+          <BodyView onSelect={() => setStep({ kind: "question", index: 1 })} />
         )}
 
         {step.kind === "name" && (
@@ -195,6 +210,41 @@ export default function Quiz() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function BodyView({ onSelect }: { onSelect: (label: string) => void }) {
+  const [picked, setPicked] = useState<string | null>(null);
+  return (
+    <div className="animate-slide-up">
+      <h2 className="text-2xl font-bold text-center mb-6 text-foreground leading-snug">
+        Qual desses corpos te <span className="text-primary">define?</span>
+      </h2>
+      <div className="grid grid-cols-2 gap-3">
+        {bodyOptions.map((b) => {
+          const active = picked === b.label;
+          return (
+            <button
+              key={b.label}
+              onClick={() => {
+                setPicked(b.label);
+                setTimeout(() => onSelect(b.label), 250);
+              }}
+              className={`bg-card rounded-2xl p-2 border-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
+                active ? "border-primary shadow-[var(--shadow-soft)]" : "border-border hover:border-primary/40"
+              }`}
+            >
+              <img
+                src={b.src}
+                alt={b.label}
+                loading="lazy"
+                className="w-full h-44 object-contain"
+              />
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
