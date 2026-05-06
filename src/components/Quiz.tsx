@@ -162,6 +162,10 @@ export default function Quiz() {
           />
         )}
 
+        {step.kind === "transform" && (
+          <TransformView onNext={() => setStep({ kind: "question", index: 1 })} />
+        )}
+
         {step.kind === "name" && (
           <NameView
             onSubmit={(n) => {
