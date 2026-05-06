@@ -199,9 +199,18 @@ export default function Quiz() {
       {/* Live popup */}
       {popup && (
         <div className="fixed top-5 right-4 sm:right-5 z-50 animate-toast-in">
-          <div className="bg-card shadow-[var(--shadow-card)] border border-border rounded-2xl px-4 py-3 flex items-center gap-3 max-w-xs">
-            <span className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
-            <p className="text-sm text-foreground">{popup}</p>
+          <div
+            className="rounded-2xl px-4 py-3 flex items-center gap-3 max-w-xs text-white border-2 border-white/30 ring-2 ring-primary/40"
+            style={{
+              background: "var(--gradient-primary)",
+              boxShadow: "0 12px 40px -8px oklch(0.68 0.18 12 / 0.6), 0 0 0 4px oklch(0.68 0.18 12 / 0.15)",
+            }}
+          >
+            <span className="relative flex h-3 w-3 shrink-0">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-white opacity-75 animate-ping" />
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-white" />
+            </span>
+            <p className="text-sm font-bold drop-shadow-sm">{popup}</p>
           </div>
         </div>
       )}
