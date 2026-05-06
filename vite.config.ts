@@ -3,7 +3,16 @@
 //   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, cloudflare (build-only),
 //     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
 //     error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+export default defineConfig({
+  // Disable Cloudflare adapter so we can deploy as static SPA (Vercel/Netlify/etc.)
+  cloudflare: false,
+  tanstackStart: {
+    // SPA mode: prerender a single shell, route on the client.
+    // Output goes to .output/public as plain static files.
+    spa: {
+      enabled: true,
+    },
+  },
+});
