@@ -3,18 +3,8 @@ import ba1 from "@/assets/transform/before-after-1.jpg";
 import ba2 from "@/assets/transform/before-after-2.jpg";
 import ba3 from "@/assets/transform/before-after-3.jpg";
 import ba4 from "@/assets/transform/before-after-4.jpg";
-import body1 from "@/assets/bodies/body-1.png";
-import body2 from "@/assets/bodies/body-2.png";
-import body3 from "@/assets/bodies/body-3.png";
-import body4 from "@/assets/bodies/body-4.png";
 
 const transformImages = [ba1, ba2, ba3, ba4];
-const bodyOptions = [
-  { src: body1, label: "Bem magrinha" },
-  { src: body2, label: "Magra com leve definição" },
-  { src: body3, label: "Mais definida" },
-  { src: body4, label: "Magrinha com barriguinha" },
-];
 
 type Step =
   | { kind: "intro" }
