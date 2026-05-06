@@ -1,26 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import Quiz from "@/components/Quiz";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Quiz: Por que seu glúteo não cresce? | Método Glúteo" },
+      {
+        name: "description",
+        content:
+          "Descubra em menos de 1 minuto por que seu glúteo não cresce mesmo treinando — e qual método pode mudar isso.",
+      },
+      { property: "og:title", content: "Descubra por que seu glúteo não cresce" },
+      { property: "og:description", content: "Quiz rápido e personalizado para mulheres que querem resultado real." },
+    ],
+  }),
+  component: Quiz,
 });
-
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
-}
