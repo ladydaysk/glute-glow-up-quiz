@@ -27,7 +27,7 @@ const questions = [
     ],
   },
   {
-    q: "Você sente que seu glúteo não cresce mesmo treinando?",
+    q: "Você sente que seu glúteo ​NAO  CRESCE mesmo treinando?",
     options: [
       "😩 Não cresce de jeito nenhum",
       "😕 Cresce muito pouco",
