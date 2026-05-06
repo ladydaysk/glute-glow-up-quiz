@@ -114,6 +114,10 @@ export default function Quiz() {
     const next = [...answers];
     next[idx] = opt;
     setAnswers(next);
+    if (idx === 0) {
+      setStep({ kind: "transform" });
+      return;
+    }
     if (idx === 3) {
       setShowNote(true);
       setTimeout(() => {
