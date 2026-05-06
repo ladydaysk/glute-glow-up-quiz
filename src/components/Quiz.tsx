@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import peachImg from "@/assets/peach.png";
 
 type Step =
   | { kind: "intro" }
@@ -195,7 +196,7 @@ function Intro({ onStart, counter }: { onStart: () => void; counter: number }) {
       <p className="text-muted-foreground mb-8">Leva menos de 1 minuto</p>
 
       <div className="w-full bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-8">
-        <div className="text-6xl mb-3">🍑</div>
+        <img src={peachImg} alt="Pêssego" width={96} height={96} loading="lazy" className="mx-auto mb-3 h-24 w-24" />
         <p className="text-sm text-muted-foreground whitespace-pre-line">
           Responda 5 perguntas rápidas e descubra{"\n"}o método ideal para o seu perfil.
         </p>
