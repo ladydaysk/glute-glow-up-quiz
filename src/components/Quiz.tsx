@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { trackMetaEvent } from "@/lib/meta-pixel";
 import ba1 from "@/assets/transform/before-after-1.jpg";
 import ba2 from "@/assets/transform/before-after-2.jpg";
 import ba3 from "@/assets/transform/before-after-3.jpg";
