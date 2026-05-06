@@ -316,7 +316,7 @@ function Intro({ onStart, counter }: { onStart: () => void; counter: number }) {
       <div className="w-full bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-8">
         <div className="text-6xl mb-3">🍑</div>
         <p className="text-sm text-muted-foreground whitespace-pre-line">
-          Responda 5 perguntas rápidas e descubra{"\n"}o método ideal para o seu perfil.
+          Responda algumas perguntas rápidas e descubra{"\n"}o método ideal para o seu perfil.
         </p>
       </div>
 
