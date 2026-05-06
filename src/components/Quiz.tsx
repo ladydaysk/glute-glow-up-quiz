@@ -84,7 +84,10 @@ export default function Quiz() {
   const [name, setName] = useState("");
   const [showNote, setShowNote] = useState(false);
   const [popup, setPopup] = useState<string | null>(null);
-  const [counter] = useState(() => 487 + Math.floor(Math.random() * 60));
+  const [counter, setCounter] = useState(500);
+  useEffect(() => {
+    setCounter(487 + Math.floor(Math.random() * 60));
+  }, []);
   const [testIndex, setTestIndex] = useState(0);
 
   // Real-time social proof popup
