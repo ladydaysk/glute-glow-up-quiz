@@ -198,7 +198,7 @@ export default function Quiz() {
 
       {/* Live popup */}
       {popup && (
-        <div className="fixed bottom-5 left-4 right-4 sm:left-5 sm:right-auto z-50 animate-toast-in">
+        <div className="fixed top-5 right-4 sm:right-5 z-50 animate-toast-in">
           <div className="bg-card shadow-[var(--shadow-card)] border border-border rounded-2xl px-4 py-3 flex items-center gap-3 max-w-xs">
             <span className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
             <p className="text-sm text-foreground">{popup}</p>
