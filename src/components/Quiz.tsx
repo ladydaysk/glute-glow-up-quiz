@@ -187,7 +187,7 @@ export default function Quiz() {
 function Intro({ onStart, counter }: { onStart: () => void; counter: number }) {
   return (
     <div className="flex flex-col items-center text-center pt-10 animate-fade-in">
-      <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">Quiz exclusivo</span>
+      <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">QUIZ </span>
       <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-3 text-foreground">
         Descubra por que seu Glúteo <span className="text-primary whitespace-nowrap">NÃO CRESCE</span><br />
         (mesmo treinando)
