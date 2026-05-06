@@ -30,7 +30,7 @@ const questions = [
     q: "Qual dessas opções mais parece com você?",
     options: [
       "🙄 Muito magra e corpo reto",
-      "😐 Magra, mas sem definição",
+      "😐 Leve volume, mas sem definição",
       "😕 Tenho dificuldade em ganhar volume",
     ],
   },
