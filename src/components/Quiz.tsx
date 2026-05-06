@@ -84,7 +84,10 @@ export default function Quiz() {
   const [name, setName] = useState("");
   const [showNote, setShowNote] = useState(false);
   const [popup, setPopup] = useState<string | null>(null);
-  const [counter] = useState(() => 487 + Math.floor(Math.random() * 60));
+  const [counter, setCounter] = useState(500);
+  useEffect(() => {
+    setCounter(487 + Math.floor(Math.random() * 60));
+  }, []);
   const [testIndex, setTestIndex] = useState(0);
 
   // Real-time social proof popup
@@ -195,7 +198,7 @@ export default function Quiz() {
 
       {/* Live popup */}
       {popup && (
-        <div className="fixed bottom-5 left-4 right-4 sm:left-5 sm:right-auto z-50 animate-toast-in">
+        <div className="fixed top-5 right-4 sm:right-5 z-50 animate-toast-in">
           <div className="bg-card shadow-[var(--shadow-card)] border border-border rounded-2xl px-4 py-3 flex items-center gap-3 max-w-xs">
             <span className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
             <p className="text-sm text-foreground">{popup}</p>
@@ -500,12 +503,13 @@ function OfferView({ name }: { name: string }) {
         </ul>
       </div>
 
-      <button
-        className="w-full py-6 rounded-2xl text-white font-bold text-xl shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform mb-3"
+      <a
+        href="https://pay.kiwify.com.br/gM257BR"
+        className="block w-full py-6 rounded-2xl text-white font-bold text-xl shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform mb-3 text-center"
         style={{ background: "var(--gradient-primary)" }}
       >
         QUERO COMEÇAR AGORA 🔥
-      </button>
+      </a>
       <p className="text-center text-sm text-muted-foreground">
         Comece hoje e veja as primeiras mudanças nas próximas semanas.
       </p>
