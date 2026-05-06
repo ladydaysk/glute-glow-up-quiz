@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
+import ba1 from "@/assets/transform/before-after-1.jpg";
+import ba2 from "@/assets/transform/before-after-2.jpg";
+import ba3 from "@/assets/transform/before-after-3.jpg";
+import ba4 from "@/assets/transform/before-after-4.jpg";
+
+const transformImages = [ba1, ba2, ba3, ba4];
 
 type Step =
   | { kind: "intro" }
   | { kind: "question"; index: number }
+  | { kind: "transform" }
   | { kind: "name" }
   | { kind: "result" }
   | { kind: "social" }
