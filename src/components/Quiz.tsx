@@ -503,12 +503,13 @@ function OfferView({ name }: { name: string }) {
         </ul>
       </div>
 
-      <button
-        className="w-full py-6 rounded-2xl text-white font-bold text-xl shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform mb-3"
+      <a
+        href="https://pay.kiwify.com.br/gM257BR"
+        className="block w-full py-6 rounded-2xl text-white font-bold text-xl shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform mb-3 text-center"
         style={{ background: "var(--gradient-primary)" }}
       >
         QUERO COMEÇAR AGORA 🔥
-      </button>
+      </a>
       <p className="text-center text-sm text-muted-foreground">
         Comece hoje e veja as primeiras mudanças nas próximas semanas.
       </p>
