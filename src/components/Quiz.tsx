@@ -200,7 +200,7 @@ export default function Quiz() {
 
       {/* Live popup */}
       {popup && (
-        <div className="fixed top-5 left-4 sm:left-5 z-50 animate-toast-in">
+        <div className="fixed bottom-5 left-4 sm:left-5 z-50 animate-toast-in">
           <div
             className="rounded-2xl px-4 py-3 flex items-center gap-3 max-w-xs text-white border-2 border-white/30 ring-2 ring-primary/40"
             style={{
