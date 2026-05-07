@@ -261,7 +261,7 @@ function TransformView({ onNext }: { onNext: () => void }) {
       </div>
 
       <p className="text-center text-2xl font-bold text-foreground mb-5">
-        Quando será <span className="text-primary">você?</span>
+        Quando será <span className="text-primary">você? ❤️</span>
       </p>
 
       <button
