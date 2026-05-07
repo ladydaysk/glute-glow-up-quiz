@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { trackMetaEvent } from "@/lib/meta-pixel";
-import ba1 from "@/assets/transform/before-after-1.jpg";
-import ba2 from "@/assets/transform/before-after-2.jpg";
-import ba3 from "@/assets/transform/before-after-3.jpg";
-import ba4 from "@/assets/transform/before-after-4.jpg";
+import ba1 from "@/assets/transform/before-after-1.webp";
+import ba2 from "@/assets/transform/before-after-2.webp";
+import ba3 from "@/assets/transform/before-after-3.webp";
+import ba4 from "@/assets/transform/before-after-4.webp";
 
 const transformImages = [ba1, ba2, ba3, ba4];
 
