@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { track } from "@/lib/fbq";
-import { questions, testimonials, type Step } from "./QuizSteps";
+import { questions, testimonials, type Step } from "./quiz-data";
 
 const QuestionView = lazy(() => import("./QuizSteps").then((m) => ({ default: m.QuestionView })));
 const TransformView = lazy(() => import("./QuizSteps").then((m) => ({ default: m.TransformView })));
@@ -184,7 +184,7 @@ function Intro({ onStart, onHover, counter }: { onStart: () => void; onHover: ()
   }, [onHover]);
 
   return (
-    <div className="flex flex-col items-center text-center pt-10 animate-fade-in">
+    <div className="flex flex-col items-center text-center pt-10">
       <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">QUIZ </span>
       <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-3 text-foreground">
         Descubra por que seu Glúteo <span className="text-primary whitespace-nowrap">NÃO CRESCE</span><br />
