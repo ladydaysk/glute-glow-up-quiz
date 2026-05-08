@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { track } from "@/lib/fbq";
-import { questions, testimonials, type Step } from "./QuizSteps";
+import { questions, testimonials, type Step } from "./quiz-data";
 
 const QuestionView = lazy(() => import("./QuizSteps").then((m) => ({ default: m.QuestionView })));
 const TransformView = lazy(() => import("./QuizSteps").then((m) => ({ default: m.TransformView })));
