@@ -88,10 +88,8 @@ export default function Quiz() {
   const [counter, setCounter] = useState(500);
   useEffect(() => {
     setCounter(487 + Math.floor(Math.random() * 60));
-    trackMetaEvent("PageView");
-  }, []);
 
-  useEffect(() => {
+    // Inicializa o Meta Pixel antes de qualquer evento
     (function (f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
       if (f.fbq) return;
       n = f.fbq = function () {
@@ -109,6 +107,9 @@ export default function Quiz() {
       s.parentNode.insertBefore(t, s);
     })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
     (window as any).fbq("init", "2495276150874187");
+
+    // Dispara PageView (browser pixel + CAPI com dedupe)
+    trackMetaEvent("PageView");
   }, []);
   const [testIndex, setTestIndex] = useState(0);
 
