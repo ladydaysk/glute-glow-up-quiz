@@ -92,7 +92,7 @@ export default function Quiz() {
   }, []);
 
   useEffect(() => {
-    !(function (f: any, b, e, v, n: any, t: any, s: any) {
+    (function (f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
       if (f.fbq) return;
       n = f.fbq = function () {
         n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
@@ -107,7 +107,7 @@ export default function Quiz() {
       t.src = v;
       s = b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t, s);
-    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js", undefined, undefined, undefined);
+    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
     (window as any).fbq("init", "2495276150874187");
   }, []);
   const [testIndex, setTestIndex] = useState(0);
