@@ -19,6 +19,16 @@ function getCookie(name: string): string | undefined {
   return m ? decodeURIComponent(m[1]) : undefined;
 }
 
+function getOrCreateFbp(): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const existing = getCookie("_fbp");
+  if (existing) return existing;
+
+  const fbp = `fb.1.${Date.now()}.${Math.floor(Math.random() * 10_000_000_000)}`;
+  document.cookie = `_fbp=${encodeURIComponent(fbp)}; path=/; max-age=7776000; samesite=lax`;
+  return fbp;
+}
+
 export function trackMetaEvent(
   eventName: "PageView" | "ViewContent",
   customData: Record<string, unknown> = {},
@@ -42,7 +52,7 @@ export function trackMetaEvent(
         event_name: eventName,
         event_id: eventId,
         event_source_url: window.location.href,
-        fbp: getCookie("_fbp"),
+        fbp: getOrCreateFbp(),
         fbc: getCookie("_fbc"),
         custom_data: customData,
       }),
