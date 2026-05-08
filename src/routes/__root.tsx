@@ -47,6 +47,8 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "preconnect", href: "https://connect.facebook.net" },
+      { rel: "dns-prefetch", href: "https://www.facebook.com" },
     ],
   }),
   shellComponent: RootShell,
@@ -54,7 +56,7 @@ export const Route = createRootRoute({
   notFoundComponent: NotFoundComponent,
 });
 
-const META_PIXEL_SCRIPT = `!function(f,b,e,v,n,t,s)
+const META_PIXEL_SCRIPT = `(function(){function l(){if(window.fbq)return;!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
@@ -63,7 +65,10 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2495276150874187');
-fbq('track', 'PageView');`;
+fbq('track', 'PageView');}
+if(document.readyState==='complete'){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:2500}):setTimeout(l,1500));}
+else{window.addEventListener('load',function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:2500}):setTimeout(l,1500));});}
+})();`;
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
