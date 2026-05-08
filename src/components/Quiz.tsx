@@ -42,7 +42,7 @@ export default function Quiz() {
       ];
       setPopup(actions[Math.floor(Math.random() * actions.length)]);
       setTimeout(() => setPopup(null), 4500);
-    }, 7000);
+    }, 25000);
     return () => clearInterval(id);
   }, [counter]);
 
