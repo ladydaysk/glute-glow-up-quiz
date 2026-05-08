@@ -85,6 +85,7 @@ export function trackMetaEvent(
   try {
     fetch("/api/meta-capi", {
       method: "POST",
+      credentials: "same-origin",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         event_name: eventName,
@@ -94,7 +95,6 @@ export function trackMetaEvent(
         fbc: getCookie("_fbc"),
         custom_data: customData,
       }),
-      keepalive: true,
     }).catch(() => {});
   } catch {
     /* noop */
