@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { track } from "@/lib/fbq";
 import ba1 from "@/assets/transform/before-after-1.webp";
 import ba2 from "@/assets/transform/before-after-2.webp";
 import ba3 from "@/assets/transform/before-after-3.webp";
