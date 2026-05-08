@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { track } from "@/lib/fbq";
 import ba1 from "@/assets/transform/before-after-1.webp";
 import ba2 from "@/assets/transform/before-after-2.webp";
 import ba3 from "@/assets/transform/before-after-3.webp";
@@ -87,6 +88,12 @@ export default function Quiz() {
   const [counter, setCounter] = useState(500);
   useEffect(() => {
     setCounter(487 + Math.floor(Math.random() * 60));
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("purchase") === "success") {
+        track("Purchase", { currency: "BRL", value: 0 });
+      }
+    }
   }, []);
   const [testIndex, setTestIndex] = useState(0);
 
@@ -180,17 +187,24 @@ export default function Quiz() {
           <NameView
             onSubmit={(n) => {
               setName(n);
+              track("Lead", { content_name: "Quiz Name Submit" });
               setStep({ kind: "result" });
             }}
           />
         )}
 
         {step.kind === "result" && (
-          <ResultView name={name} onNext={() => setStep({ kind: "social" })} />
+          <ResultView name={name} onNext={() => {
+            track("ViewContent", { content_name: "Quiz Result" });
+            setStep({ kind: "social" });
+          }} />
         )}
 
         {step.kind === "social" && (
-          <SocialView t={testimonials[testIndex]} counter={counter} onNext={() => setStep({ kind: "offer" })} />
+          <SocialView t={testimonials[testIndex]} counter={counter} onNext={() => {
+            track("AddToCart", { content_name: "Quiz Offer" });
+            setStep({ kind: "offer" });
+          }} />
         )}
 
         {step.kind === "offer" && <OfferView name={name} />}
@@ -514,6 +528,7 @@ function OfferView({ name }: { name: string }) {
 
       <a
         href="https://pay.kiwify.com.br/gM257BR"
+        onClick={() => track("InitiateCheckout", { content_name: "Kiwify Checkout", currency: "BRL" })}
         className="block w-full py-6 rounded-2xl text-white font-bold text-xl shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform mb-3 text-center"
         style={{ background: "var(--gradient-primary)" }}
       >
