@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { trackMetaEvent } from "@/lib/meta-pixel";
+import { initMetaPixel, trackMetaEvent } from "@/lib/meta-pixel";
 import ba1 from "@/assets/transform/before-after-1.webp";
 import ba2 from "@/assets/transform/before-after-2.webp";
 import ba3 from "@/assets/transform/before-after-3.webp";
@@ -88,27 +88,7 @@ export default function Quiz() {
   const [counter, setCounter] = useState(500);
   useEffect(() => {
     setCounter(487 + Math.floor(Math.random() * 60));
-
-    // Inicializa o Meta Pixel antes de qualquer evento
-    (function (f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
-      if (f.fbq) return;
-      n = f.fbq = function () {
-        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-      };
-      if (!f._fbq) f._fbq = n;
-      n.push = n;
-      n.loaded = !0;
-      n.version = "2.0";
-      n.queue = [];
-      t = b.createElement(e);
-      t.async = !0;
-      t.src = v;
-      s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s);
-    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-    (window as any).fbq("init", "2495276150874187");
-
-    // Dispara PageView (browser pixel + CAPI com dedupe)
+    initMetaPixel();
     trackMetaEvent("PageView");
   }, []);
   const [testIndex, setTestIndex] = useState(0);

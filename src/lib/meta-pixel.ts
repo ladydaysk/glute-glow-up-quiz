@@ -3,6 +3,44 @@
 declare global {
   interface Window {
     fbq?: (...args: any[]) => void;
+    _fbq?: (...args: any[]) => void;
+    __metaPixelInitialized?: boolean;
+  }
+}
+
+const PIXEL_ID = "2495276150874187";
+
+export function initMetaPixel() {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+  if (window.__metaPixelInitialized) return;
+
+  try {
+    const w = window as Window & Record<string, any>;
+    const d = document;
+
+    if (!w.fbq) {
+      const fbq = function (...args: unknown[]) {
+        fbq.callMethod ? fbq.callMethod(...args) : fbq.queue.push(args);
+      } as any;
+      fbq.push = fbq;
+      fbq.loaded = true;
+      fbq.version = "2.0";
+      fbq.queue = [];
+      w.fbq = fbq;
+      w._fbq = fbq;
+
+      const script = d.createElement("script");
+      script.async = true;
+      script.src = "https://connect.facebook.net/en_US/fbevents.js";
+      const firstScript = d.getElementsByTagName("script")[0];
+      if (firstScript?.parentNode) firstScript.parentNode.insertBefore(script, firstScript);
+      else (d.head || d.body || d.documentElement).appendChild(script);
+    }
+
+    w.fbq?.("init", PIXEL_ID);
+    window.__metaPixelInitialized = true;
+  } catch (error) {
+    console.warn("Meta Pixel initialization skipped", error);
   }
 }
 
@@ -34,6 +72,7 @@ export function trackMetaEvent(
   customData: Record<string, unknown> = {},
 ) {
   if (typeof window === "undefined") return;
+  initMetaPixel();
   const eventId = uuid();
 
   // 1) Browser pixel
