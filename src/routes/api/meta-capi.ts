@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import "@tanstack/react-start";
 
 const PIXEL_ID = "2495276150874187";
 const GRAPH_URL = `https://graph.facebook.com/v19.0/${PIXEL_ID}/events`;
