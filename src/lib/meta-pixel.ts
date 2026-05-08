@@ -3,8 +3,12 @@
 declare global {
   interface Window {
     fbq?: (...args: any[]) => void;
+    _fbq?: (...args: any[]) => void;
+    __metaPixelInitialized?: boolean;
   }
 }
+
+const META_PIXEL_ID = "2495276150874187";
 
 function uuid() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -29,15 +33,49 @@ function getOrCreateFbp(): string | undefined {
   return fbp;
 }
 
+function ensureMetaPixelLoaded() {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+
+  if (!window.fbq) {
+    const fbq = function (...args: any[]) {
+      if (fbq.callMethod) {
+        fbq.callMethod.apply(fbq, args);
+      } else {
+        fbq.queue.push(args);
+      }
+    } as any;
+
+    fbq.push = fbq;
+    fbq.loaded = true;
+    fbq.version = "2.0";
+    fbq.queue = [];
+    window.fbq = fbq;
+    window._fbq = fbq;
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://connect.facebook.net/en_US/fbevents.js";
+    const firstScript = document.getElementsByTagName("script")[0];
+    firstScript?.parentNode?.insertBefore(script, firstScript);
+  }
+
+  if (!window.__metaPixelInitialized) {
+    window.fbq("init", META_PIXEL_ID);
+    window.__metaPixelInitialized = true;
+  }
+}
+
 export function trackMetaEvent(
   eventName: "PageView" | "ViewContent",
   customData: Record<string, unknown> = {},
 ) {
   if (typeof window === "undefined") return;
   const eventId = uuid();
+  const fbp = getOrCreateFbp();
 
   // 1) Browser pixel
   try {
+    ensureMetaPixelLoaded();
     window.fbq?.("track", eventName, customData, { eventID: eventId });
   } catch {
     /* noop */
@@ -52,7 +90,7 @@ export function trackMetaEvent(
         event_name: eventName,
         event_id: eventId,
         event_source_url: window.location.href,
-        fbp: getOrCreateFbp(),
+        fbp,
         fbc: getCookie("_fbc"),
         custom_data: customData,
       }),
