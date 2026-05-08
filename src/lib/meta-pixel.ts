@@ -60,7 +60,7 @@ function ensureMetaPixelLoaded() {
   }
 
   if (!window.__metaPixelInitialized) {
-    window.fbq("init", META_PIXEL_ID);
+    window.fbq?.("init", META_PIXEL_ID);
     window.__metaPixelInitialized = true;
   }
 }
