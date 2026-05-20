@@ -22,7 +22,7 @@ export const questions = [
     options: [
       "🙄 Muito magra e corpo reto",
       "😐 Leve volume, mas sem definição",
-      "😕 Tenho dificuldade em ganhar volume",
+      "😕 Tenho perna fina e barriguinha saliente ",
     ],
   },
   {
