@@ -16,7 +16,9 @@ export function TransformView({ onNext }: { onNext: () => void }) {
   return (
     <div className="animate-slide-up flex flex-col">
       <h2 className="text-xl sm:text-2xl font-bold text-center mb-4 text-foreground leading-snug">
-        Mais de <span className="text-primary">500 mulheres</span> já transformaram o corpo com o Método <span className="text-primary">LadyDaysk</span>
+        Mais de <span className="text-primary">500 mulheres</span> já transformaram o corpo com o{" "}
+        <br className="sm:hidden" />
+        Método da <span className="text-primary">LadyDay</span>
       </h2>
 
       <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-[var(--shadow-card)] bg-card mb-3">
