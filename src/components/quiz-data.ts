@@ -12,7 +12,7 @@ export const questions = [
     q: "Qual é o seu principal objetivo hoje?",
     options: [
       "🍑 Ter glúteo maior e mais redondo",
-      "🔥 Definir pernas e corpo",
+      "🔥 Definir pernas e o corpo",
       "💪 Ganhar massa muscular",
       "😔 Sair do corpo reto",
     ],
