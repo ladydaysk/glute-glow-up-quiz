@@ -159,6 +159,7 @@ export function ResultView({ name, onNext }: { name: string; onNext: () => void 
             "Treina sem progressão",
             "Não vê resultado mesmo se esforçando",
             "Personais tradicionais não te entendem",
+            "Todo treino é voltado pra quem quer emagrecer; ninguém ensina ganho de volume pra magrinhas",
           ].map((t) => (
             <li key={t} className="flex gap-3 items-start">
               <span className="text-destructive font-bold">❌</span>
