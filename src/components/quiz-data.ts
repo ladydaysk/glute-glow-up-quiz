@@ -30,7 +30,7 @@ export const questions = [
     options: [
       "😩 Não cresce de jeito nenhum",
       "😕 Cresce muito pouco",
-      "🤷‍♀️ Nem sei se estou fazendo certo",
+      "🤷‍♀️ Não sei se estou fazendo certo",
     ],
   },
   {
