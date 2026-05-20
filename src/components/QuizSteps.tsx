@@ -158,6 +158,7 @@ export function ResultView({ name, onNext }: { name: string; onNext: () => void 
             "Não ativa o glúteo corretamente",
             "Treina sem progressão",
             "Não vê resultado mesmo se esforçando",
+            "Personais tradicionais não te entendem",
           ].map((t) => (
             <li key={t} className="flex gap-3 items-start">
               <span className="text-destructive font-bold">❌</span>
