@@ -246,13 +246,24 @@ declare global {
   }
 }
 
-const CHECKOUT_URL = "https://www.youtube.com/watch?v=TYFN-q9g0e0";
+const CHECKOUT_URL = "https://pay.kiwify.com.br/gM257BR";
 
 export function OfferView({ name: _name }: { name: string }) {
+  const [opened, setOpened] = useState(false);
   const [showCta, setShowCta] = useState(false);
+  const videoRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
+    if (!opened) return;
+    const t = setTimeout(() => {
+      videoRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 80);
+    return () => clearTimeout(t);
+  }, [opened]);
+
+  useEffect(() => {
+    if (!opened) return;
     let interval: ReturnType<typeof setInterval> | null = null;
 
     const init = () => {
@@ -262,9 +273,8 @@ export function OfferView({ name: _name }: { name: string }) {
           onReady: ({ target }) => {
             interval = setInterval(() => {
               try {
-                const dur = target.getDuration();
                 const cur = target.getCurrentTime();
-                if (dur > 0 && dur - cur <= 45) setShowCta(true);
+                if (cur >= 180) setShowCta(true);
               } catch {
                 /* noop */
               }
@@ -293,17 +303,41 @@ export function OfferView({ name: _name }: { name: string }) {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, []);
+  }, [opened]);
+
+  if (!opened) {
+    return (
+      <div className="animate-fade-in pt-6 flex flex-col items-center text-center">
+        <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
+          SEU PLANO ESTÁ PRONTO
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground leading-snug mb-8">
+          Veja agora o método feito para o <span className="text-primary">seu perfil</span>
+        </h2>
+        <button
+          onClick={() => {
+            track("ViewContent", { content_name: "VSL Open" });
+            setOpened(true);
+          }}
+          className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/30"
+          style={{ background: "var(--gradient-primary)" }}
+        >
+          VER MEU PLANO PERSONALIZADO →
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="animate-fade-in pt-2 flex flex-col">
+    <div className="animate-fade-in pt-2 flex flex-col items-center">
       <div
-        className="relative w-full overflow-hidden rounded-3xl bg-black shadow-[var(--shadow-card)]"
+        ref={videoRef}
+        className="relative w-full max-w-[280px] sm:max-w-[320px] mx-auto overflow-hidden rounded-3xl bg-black shadow-[0_20px_60px_-15px_oklch(0.68_0.18_12/0.45)] ring-1 ring-primary/20"
         style={{ aspectRatio: "9 / 16" }}
       >
         <iframe
           ref={iframeRef}
-          src="https://www.youtube.com/embed/TYFN-q9g0e0?rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+          src="https://www.youtube.com/embed/TYFN-q9g0e0?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&controls=1&iv_load_policy=3&fs=0"
           title="Meu plano"
           loading="eager"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -311,6 +345,10 @@ export function OfferView({ name: _name }: { name: string }) {
           className="absolute inset-0 h-full w-full border-0"
         />
       </div>
+
+      <p className="text-center text-sm text-muted-foreground mt-4 max-w-xs">
+        Assista até o final para liberar seu acesso 💗
+      </p>
 
       {showCta && <div className="h-28" aria-hidden />}
 
@@ -330,7 +368,7 @@ export function OfferView({ name: _name }: { name: string }) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => track("InitiateCheckout", { content_name: "VSL CTA" })}
-          className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform animate-pop-in ring-2 ring-primary/40"
+          className="block w-full max-w-md mx-auto py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform animate-pop-in ring-2 ring-primary/40"
           style={{ background: "var(--gradient-primary)" }}
         >
           QUERO COMEÇAR AGORA →
