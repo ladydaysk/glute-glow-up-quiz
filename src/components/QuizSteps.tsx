@@ -229,53 +229,19 @@ export function SocialView({
   );
 }
 
-export function OfferView({ name }: { name: string }) {
-  const items = [
-    "Treinos passo a passo (academia e casa)",
-    "Método focado em ativação de glúteo",
-    "Progressão inteligente para crescimento",
-    "Estratégias que funcionam para corpo magro",
-  ];
+export function OfferView({ name: _name }: { name: string }) {
   return (
-    <div className="animate-fade-in pt-2">
-      <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold block text-center mb-3">
-        Método exclusivo
-      </span>
-      <h2 className="text-3xl font-bold text-center mb-3 leading-tight">
-        Você não precisa <span className="line-through text-muted-foreground">treinar mais</span>… precisa treinar do <span className="text-primary">jeito certo</span>.
-      </h2>
-      <p className="text-center text-muted-foreground mb-6">
-        {name}, criamos um plano completo para mulheres com o seu perfil.
-      </p>
-
-      <div className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-6">
-        <p className="font-semibold text-foreground mb-4">O que você recebe:</p>
-        <ul className="space-y-3">
-          {items.map((it) => (
-            <li key={it} className="flex gap-3 items-start">
-              <span
-                className="h-7 w-7 rounded-full flex items-center justify-center text-white text-sm shrink-0"
-                style={{ background: "var(--gradient-primary)" }}
-              >
-                ✓
-              </span>
-              <span className="text-foreground pt-0.5">{it}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
+    <div className="animate-fade-in pt-2 flex flex-col items-center">
       <a
-        href="https://pay.kiwify.com.br/gM257BR"
-        onClick={() => track("InitiateCheckout", { content_name: "Kiwify Checkout", currency: "BRL" })}
-        className="block w-full py-6 rounded-2xl text-white font-bold text-xl shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform mb-3 text-center"
+        href="https://www.youtube.com/watch?v=TYFN-q9g0e0"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => track("InitiateCheckout", { content_name: "Watch Plan Video" })}
+        className="block w-full py-6 rounded-2xl text-white font-bold text-xl shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform text-center"
         style={{ background: "var(--gradient-primary)" }}
       >
-        QUERO COMEÇAR AGORA 🔥
+        ▶ Assistir meu plano
       </a>
-      <p className="text-center text-sm text-muted-foreground">
-        Comece hoje e veja as primeiras mudanças nas próximas semanas.
-      </p>
     </div>
   );
 }
