@@ -229,19 +229,113 @@ export function SocialView({
   );
 }
 
+type YTPlayer = {
+  getCurrentTime: () => number;
+  getDuration: () => number;
+};
+
+declare global {
+  interface Window {
+    YT?: {
+      Player: new (
+        el: HTMLElement,
+        opts: { events?: { onReady?: (e: { target: YTPlayer }) => void } },
+      ) => YTPlayer;
+    };
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+const CHECKOUT_URL = "https://www.youtube.com/watch?v=TYFN-q9g0e0";
+
 export function OfferView({ name: _name }: { name: string }) {
+  const [showCta, setShowCta] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    const init = () => {
+      if (!window.YT?.Player || !iframeRef.current) return;
+      new window.YT.Player(iframeRef.current, {
+        events: {
+          onReady: ({ target }) => {
+            interval = setInterval(() => {
+              try {
+                const dur = target.getDuration();
+                const cur = target.getCurrentTime();
+                if (dur > 0 && dur - cur <= 45) setShowCta(true);
+              } catch {
+                /* noop */
+              }
+            }, 1000);
+          },
+        },
+      });
+    };
+
+    if (window.YT?.Player) {
+      init();
+    } else {
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        const s = document.createElement("script");
+        s.src = "https://www.youtube.com/iframe_api";
+        s.async = true;
+        document.body.appendChild(s);
+      }
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        prev?.();
+        init();
+      };
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, []);
+
   return (
-    <div className="animate-fade-in pt-2 flex flex-col items-center">
-      <a
-        href="https://www.youtube.com/watch?v=TYFN-q9g0e0"
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => track("InitiateCheckout", { content_name: "Watch Plan Video" })}
-        className="block w-full py-6 rounded-2xl text-white font-bold text-xl shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform text-center"
-        style={{ background: "var(--gradient-primary)" }}
+    <div className="animate-fade-in pt-2 flex flex-col">
+      <div
+        className="relative w-full overflow-hidden rounded-3xl bg-black shadow-[var(--shadow-card)]"
+        style={{ aspectRatio: "9 / 16" }}
       >
-        ▶ Assistir meu plano
-      </a>
+        <iframe
+          ref={iframeRef}
+          src="https://www.youtube.com/embed/TYFN-q9g0e0?rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+          title="Meu plano"
+          loading="eager"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full border-0"
+        />
+      </div>
+
+      {showCta && <div className="h-28" aria-hidden />}
+
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-40 px-4 pb-4 pt-3 transition-all duration-500 ${
+          showCta
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-full opacity-0"
+        }`}
+        style={{
+          background:
+            "linear-gradient(to top, var(--background) 55%, transparent)",
+        }}
+      >
+        <a
+          href={CHECKOUT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => track("InitiateCheckout", { content_name: "VSL CTA" })}
+          className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform animate-pop-in ring-2 ring-primary/40"
+          style={{ background: "var(--gradient-primary)" }}
+        >
+          QUERO COMEÇAR AGORA →
+        </a>
+      </div>
     </div>
   );
 }
