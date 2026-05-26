@@ -286,7 +286,7 @@ export function OfferView({ name: _name }: { name: string }) {
         style={{ aspectRatio: "9 / 16" }}
       >
         <iframe
-          src="https://fast.wistia.net/embed/iframe/94mg6nb5sujp94g?seo=false&videoFoam=true&autoPlay=true&silentAutoPlay=false"
+          src="https://fast.wistia.net/embed/iframe/fq9blvv7ui?seo=false&videoFoam=true&autoPlay=true&silentAutoPlay=false"
           title="Meu plano"
           loading="eager"
           allow="autoplay; fullscreen"
