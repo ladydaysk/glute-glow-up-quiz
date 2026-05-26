@@ -299,30 +299,20 @@ export function OfferView({ name: _name }: { name: string }) {
         Assista até o final para liberar seu acesso 💗
       </p>
 
-      {showCta && <div className="h-28" aria-hidden />}
-
-      <div
-        className={`fixed bottom-0 left-0 right-0 z-40 px-4 pb-4 pt-3 transition-all duration-500 ${
-          showCta
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-full opacity-0"
-        }`}
-        style={{
-          background:
-            "linear-gradient(to top, var(--background) 55%, transparent)",
-        }}
-      >
-        <a
-          href={CHECKOUT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => track("InitiateCheckout", { content_name: "VSL CTA" })}
-          className="block w-full max-w-md mx-auto py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform animate-pop-in ring-2 ring-primary/40"
-          style={{ background: "var(--gradient-primary)" }}
-        >
-          QUERO COMEÇAR AGORA →
-        </a>
-      </div>
+      {showCta && (
+        <div className="w-full max-w-md mx-auto mt-6 animate-pop-in">
+          <a
+            href={CHECKOUT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("InitiateCheckout", { content_name: "VSL CTA" })}
+            className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/40"
+            style={{ background: "var(--gradient-primary)" }}
+          >
+            QUERO COMEÇAR AGORA →
+          </a>
+        </div>
+      )}
     </div>
   );
 }
