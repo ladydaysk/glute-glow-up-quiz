@@ -229,30 +229,13 @@ export function SocialView({
   );
 }
 
-type YTPlayer = {
-  getCurrentTime: () => number;
-  getDuration: () => number;
-};
-
-declare global {
-  interface Window {
-    YT?: {
-      Player: new (
-        el: HTMLElement,
-        opts: { events?: { onReady?: (e: { target: YTPlayer }) => void } },
-      ) => YTPlayer;
-    };
-    onYouTubeIframeAPIReady?: () => void;
-  }
-}
-
 const CHECKOUT_URL = "https://pay.kiwify.com.br/gM257BR";
 
 export function OfferView({ name: _name }: { name: string }) {
   const [opened, setOpened] = useState(false);
   const [showCta, setShowCta] = useState(false);
   const videoRef = useRef<HTMLDivElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!opened) return;
@@ -264,44 +247,11 @@ export function OfferView({ name: _name }: { name: string }) {
 
   useEffect(() => {
     if (!opened) return;
-    let interval: ReturnType<typeof setInterval> | null = null;
-
-    const init = () => {
-      if (!window.YT?.Player || !iframeRef.current) return;
-      new window.YT.Player(iframeRef.current, {
-        events: {
-          onReady: ({ target }) => {
-            interval = setInterval(() => {
-              try {
-                const cur = target.getCurrentTime();
-                if (cur >= 180) setShowCta(true);
-              } catch {
-                /* noop */
-              }
-            }, 1000);
-          },
-        },
-      });
-    };
-
-    if (window.YT?.Player) {
-      init();
-    } else {
-      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
-        const s = document.createElement("script");
-        s.src = "https://www.youtube.com/iframe_api";
-        s.async = true;
-        document.body.appendChild(s);
-      }
-      const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => {
-        prev?.();
-        init();
-      };
-    }
-
+    timerRef.current = setTimeout(() => {
+      setShowCta(true);
+    }, 180000); // 3 minutos
     return () => {
-      if (interval) clearInterval(interval);
+      if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [opened]);
 
@@ -336,11 +286,10 @@ export function OfferView({ name: _name }: { name: string }) {
         style={{ aspectRatio: "9 / 16" }}
       >
         <iframe
-          ref={iframeRef}
-          src="https://www.youtube.com/embed/TYFN-q9g0e0?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&controls=1&iv_load_policy=3&fs=0"
+          src="https://fast.wistia.net/embed/iframe/94mg6nb5sujp94g?seo=false&videoFoam=true&autoPlay=true&silentAutoPlay=false"
           title="Meu plano"
           loading="eager"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="autoplay; fullscreen"
           allowFullScreen
           className="absolute inset-0 h-full w-full border-0"
         />
