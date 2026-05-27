@@ -249,7 +249,7 @@ export function OfferView({ name: _name }: { name: string }) {
     if (!opened) return;
     timerRef.current = setTimeout(() => {
       setShowCta(true);
-    }, 180000); // 3 minutos
+    }, 120000); // 2 minutos
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
