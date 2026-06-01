@@ -59,8 +59,17 @@ export const questions = [
 ];
 
 export const testimonials = [
-  { name: "Juliana, 26", text: "Em 8 semanas meu bumbum mudou completamente! Nunca pensei que daria certo pra mim 🥹" },
-  { name: "Camila, 31", text: "Sempre fui o tipo 'corpo reto', e hoje minhas calças não fecham mais na cintura 😍" },
-  { name: "Rafa, 23", text: "Treinava há anos sem ver resultado. Em 1 mês de método já notei diferença real!" },
+  {
+    name: "Juliana, 26",
+    text: "Em 8 semanas meu bumbum mudou completamente! Nunca pensei que daria certo pra mim 🥹",
+  },
+  {
+    name: "Camila, 31",
+    text: "Sempre fui o tipo 'corpo reto', e hoje minhas calças não fecham mais na cintura 😍",
+  },
+  {
+    name: "Rafa, 23",
+    text: "Treinava há anos sem ver resultado. Em 1 mês de método já notei diferença real!",
+  },
   { name: "Letícia, 29", text: "O segredo era ATIVAÇÃO. Mudou tudo. Recomendo demais 💗" },
 ];

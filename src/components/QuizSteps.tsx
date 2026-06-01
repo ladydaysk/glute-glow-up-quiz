@@ -80,7 +80,9 @@ export function QuestionView({
   const [picked, setPicked] = useState<string | null>(null);
   return (
     <div className="animate-slide-up">
-      <p className="text-sm text-primary font-semibold mb-2">Pergunta {current} de {total}</p>
+      <p className="text-sm text-primary font-semibold mb-2">
+        Pergunta {current} de {total}
+      </p>
       <h2 className="text-2xl font-bold mb-6 text-foreground leading-snug">{data.q}</h2>
 
       <div className="space-y-3">
@@ -94,7 +96,9 @@ export function QuestionView({
                 setTimeout(() => onSelect(opt), 250);
               }}
               className={`w-full text-left p-5 rounded-2xl bg-card border-2 transition-all hover:scale-[1.01] active:scale-[0.99] ${
-                active ? "border-primary shadow-[var(--shadow-soft)]" : "border-border hover:border-primary/40"
+                active
+                  ? "border-primary shadow-[var(--shadow-soft)]"
+                  : "border-border hover:border-primary/40"
               }`}
             >
               <span className="text-base font-medium text-foreground">{opt}</span>
@@ -144,12 +148,16 @@ export function ResultView({ name, onNext }: { name: string; onNext: () => void 
     <div className="animate-fade-in pt-2">
       <div className="text-center mb-6">
         <div className="text-5xl mb-3">💥</div>
-        <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold">Seu resultado</span>
+        <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold">
+          Seu resultado
+        </span>
       </div>
 
       <div className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-6">
         <h2 className="text-2xl font-bold text-foreground leading-snug mb-4">
-          {name}, seu resultado mostrou que o seu problema <span className="text-primary">NÃO é genética</span> — e sim a falta de um método específico.
+          {name}, seu resultado mostrou que o seu problema{" "}
+          <span className="text-primary">NÃO é genética</span> — e sim a falta de um método
+          específico.
         </h2>
 
         <p className="text-muted-foreground mb-4">A maioria das mulheres com o seu perfil:</p>
@@ -170,7 +178,8 @@ export function ResultView({ name, onNext }: { name: string; onNext: () => void 
 
         <div className="p-4 rounded-2xl bg-rose/40 border border-primary/20">
           <p className="text-foreground font-medium">
-            💗 A boa notícia: com o método certo, é totalmente possível ver mudanças reais em poucas semanas.
+            💗 A boa notícia: com o método certo, é totalmente possível ver mudanças reais em poucas
+            semanas.
           </p>
         </div>
       </div>
@@ -199,10 +208,14 @@ export function SocialView({
     <div className="animate-fade-in pt-2">
       <h2 className="text-2xl font-bold text-center mb-2">Veja quem já transformou o corpo</h2>
       <p className="text-center text-muted-foreground mb-6">
-        Mais de <span className="text-primary font-bold">{counter} mulheres</span> já transformaram seus corpos com esse método.
+        Mais de <span className="text-primary font-bold">{counter} mulheres</span> já transformaram
+        seus corpos com esse método.
       </p>
 
-      <div key={t.name} className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-4 animate-pop-in">
+      <div
+        key={t.name}
+        className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-4 animate-pop-in"
+      >
         <div className="flex items-center gap-3 mb-3">
           <div
             className="h-12 w-12 rounded-full flex items-center justify-center text-white font-bold"
