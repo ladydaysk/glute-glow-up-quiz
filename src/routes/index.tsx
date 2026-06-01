@@ -11,7 +11,10 @@ export const Route = createFileRoute("/")({
           "Descubra em menos de 1 minuto por que seu glúteo não cresce mesmo treinando — e qual método pode mudar isso.",
       },
       { property: "og:title", content: "Descubra por que seu glúteo não cresce" },
-      { property: "og:description", content: "Quiz rápido e personalizado para mulheres que querem resultado real." },
+      {
+        property: "og:description",
+        content: "Quiz rápido e personalizado para mulheres que querem resultado real.",
+      },
     ],
   }),
   component: Quiz,

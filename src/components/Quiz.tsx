@@ -10,7 +10,17 @@ const SocialView = lazy(() => import("./QuizSteps").then((m) => ({ default: m.So
 const OfferView = lazy(() => import("./QuizSteps").then((m) => ({ default: m.OfferView })));
 
 const totalSteps = questions.length + 3;
-const popupNames = ["Carla", "Ana", "Beatriz", "Mariana", "Júlia", "Sofia", "Larissa", "Patrícia", "Renata"];
+const popupNames = [
+  "Carla",
+  "Ana",
+  "Beatriz",
+  "Mariana",
+  "Júlia",
+  "Sofia",
+  "Larissa",
+  "Patrícia",
+  "Renata",
+];
 
 export default function Quiz() {
   const [step, setStep] = useState<Step>({ kind: "intro" });
@@ -138,17 +148,24 @@ export default function Quiz() {
           )}
 
           {step.kind === "result" && (
-            <ResultView name={name} onNext={() => {
-              track("ViewContent", { content_name: "Quiz Result" });
-              setStep({ kind: "social" });
-            }} />
+            <ResultView
+              name={name}
+              onNext={() => {
+                track("ViewContent", { content_name: "Quiz Result" });
+                setStep({ kind: "social" });
+              }}
+            />
           )}
 
           {step.kind === "social" && (
-            <SocialView t={testimonials[testIndex]} counter={counter} onNext={() => {
-              track("AddToCart", { content_name: "Quiz Offer" });
-              setStep({ kind: "offer" });
-            }} />
+            <SocialView
+              t={testimonials[testIndex]}
+              counter={counter}
+              onNext={() => {
+                track("AddToCart", { content_name: "Quiz Offer" });
+                setStep({ kind: "offer" });
+              }}
+            />
           )}
 
           {step.kind === "offer" && <OfferView name={name} />}
@@ -161,7 +178,8 @@ export default function Quiz() {
             className="rounded-2xl px-4 py-3 flex items-center gap-3 max-w-xs text-white border-2 border-white/30 ring-2 ring-primary/40"
             style={{
               background: "var(--gradient-primary)",
-              boxShadow: "0 12px 40px -8px oklch(0.68 0.18 12 / 0.6), 0 0 0 4px oklch(0.68 0.18 12 / 0.15)",
+              boxShadow:
+                "0 12px 40px -8px oklch(0.68 0.18 12 / 0.6), 0 0 0 4px oklch(0.68 0.18 12 / 0.15)",
             }}
           >
             <span className="relative flex h-3 w-3 shrink-0">
@@ -176,7 +194,15 @@ export default function Quiz() {
   );
 }
 
-function Intro({ onStart, onHover, counter }: { onStart: () => void; onHover: () => void; counter: number }) {
+function Intro({
+  onStart,
+  onHover,
+  counter,
+}: {
+  onStart: () => void;
+  onHover: () => void;
+  counter: number;
+}) {
   // Prefetch the next chunk shortly after first paint
   useEffect(() => {
     const id = setTimeout(onHover, 1200);
@@ -185,9 +211,13 @@ function Intro({ onStart, onHover, counter }: { onStart: () => void; onHover: ()
 
   return (
     <div className="flex flex-col items-center text-center pt-10">
-      <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">QUIZ </span>
+      <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">
+        QUIZ{" "}
+      </span>
       <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-3 text-foreground">
-        Descubra por que seu Glúteo <span className="text-primary whitespace-nowrap">NÃO CRESCE</span><br />
+        Descubra por que seu Glúteo{" "}
+        <span className="text-primary whitespace-nowrap">NÃO CRESCE</span>
+        <br />
         (mesmo treinando)
       </h1>
       <p className="text-muted-foreground mb-8">Leva menos de 1 minuto</p>

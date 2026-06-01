@@ -30,17 +30,34 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Lovable App" },
-      { name: "description", content: "Interactive quiz to identify personal training needs for glute growth." },
+      {
+        name: "description",
+        content: "Interactive quiz to identify personal training needs for glute growth.",
+      },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Interactive quiz to identify personal training needs for glute growth." },
+      {
+        property: "og:description",
+        content: "Interactive quiz to identify personal training needs for glute growth.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "Interactive quiz to identify personal training needs for glute growth." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ae0d6ce2-46f9-46be-b650-ffeca14f4325/id-preview-4fb46129--441ca772-a8e6-401c-ab32-9e8b9825313d.lovable.app-1778206600801.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ae0d6ce2-46f9-46be-b650-ffeca14f4325/id-preview-4fb46129--441ca772-a8e6-401c-ab32-9e8b9825313d.lovable.app-1778206600801.png" },
+      {
+        name: "twitter:description",
+        content: "Interactive quiz to identify personal training needs for glute growth.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ae0d6ce2-46f9-46be-b650-ffeca14f4325/id-preview-4fb46129--441ca772-a8e6-401c-ab32-9e8b9825313d.lovable.app-1778206600801.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ae0d6ce2-46f9-46be-b650-ffeca14f4325/id-preview-4fb46129--441ca772-a8e6-401c-ab32-9e8b9825313d.lovable.app-1778206600801.png",
+      },
     ],
     links: [
       {
