@@ -87,11 +87,10 @@ if(document.readyState==='complete'){('requestIdleCallback' in window?requestIdl
 else{window.addEventListener('load',function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:2500}):setTimeout(l,1500));});}
 })();`;
 
-const GTM_SCRIPT = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NCJBZZ4M');`;
+const GTM_SCRIPT = `(function(){function l(){window.dataLayer=window.dataLayer||[];window.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=document.getElementsByTagName('script')[0],j=document.createElement('script');j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id=GTM-NCJBZZ4M';f.parentNode.insertBefore(j,f);}
+if(document.readyState==='complete'){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));}
+else{window.addEventListener('load',function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));});}
+})();`;
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
