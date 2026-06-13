@@ -36,7 +36,7 @@ export default function Quiz() {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       if (params.get("purchase") === "success") {
-        track("Purchase", { currency: "BRL", value: 0 });
+        track("Purchase", { currency: "BRL", value: 47 });
       }
     }
   }, []);
@@ -230,7 +230,12 @@ function Intro({
       </div>
 
       <button
-        onClick={onStart}
+        id="btn-quiz-start"
+        data-track="quiz_start"
+        onClick={() => {
+          track("StartQuiz", { content_name: "Quiz Start" });
+          onStart();
+        }}
         onMouseEnter={onHover}
         onTouchStart={onHover}
         className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform"

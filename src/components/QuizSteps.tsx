@@ -40,6 +40,8 @@ export function TransformView({ onNext }: { onNext: () => void }) {
         {transformImages.map((_, i) => (
           <button
             key={i}
+            id={`btn-transform-dot-${i}`}
+            data-track={`transform_dot_${i}`}
             onClick={() => setIdx(i)}
             aria-label={`Imagem ${i + 1}`}
             className={`h-2 rounded-full transition-all ${
@@ -54,7 +56,12 @@ export function TransformView({ onNext }: { onNext: () => void }) {
       </p>
 
       <button
-        onClick={onNext}
+        id="btn-transform-continue"
+        data-track="transform_continue"
+        onClick={() => {
+          track("ViewContent", { content_name: "Transform Continue" });
+          onNext();
+        }}
         className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform"
         style={{ background: "var(--gradient-primary)" }}
       >
@@ -86,13 +93,16 @@ export function QuestionView({
       <h2 className="text-2xl font-bold mb-6 text-foreground leading-snug">{data.q}</h2>
 
       <div className="space-y-3">
-        {data.options.map((opt) => {
+        {data.options.map((opt, i) => {
           const active = picked === opt;
           return (
             <button
               key={opt}
+              id={`btn-quiz-q${current}-option-${i}`}
+              data-track={`quiz_answer_q${current}`}
               onClick={() => {
                 setPicked(opt);
+                track("AnswerQuestion", { content_name: `Q${current}`, value: opt });
                 setTimeout(() => onSelect(opt), 250);
               }}
               className={`w-full text-left p-5 rounded-2xl bg-card border-2 transition-all hover:scale-[1.01] active:scale-[0.99] ${
@@ -132,6 +142,8 @@ export function NameView({ onSubmit }: { onSubmit: (name: string) => void }) {
       />
 
       <button
+        id="btn-name-submit"
+        data-track="quiz_name_submit"
         disabled={!v.trim()}
         onClick={() => onSubmit(v.trim().split(" ")[0])}
         className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
@@ -185,6 +197,8 @@ export function ResultView({ name, onNext }: { name: string; onNext: () => void 
       </div>
 
       <button
+        id="btn-result-continue"
+        data-track="result_continue"
         onClick={onNext}
         className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform"
         style={{ background: "var(--gradient-primary)" }}
@@ -232,6 +246,8 @@ export function SocialView({
       </div>
 
       <button
+        id="btn-social-continue"
+        data-track="social_continue"
         onClick={onNext}
         className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform"
         style={{ background: "var(--gradient-primary)" }}
@@ -278,6 +294,8 @@ export function OfferView({ name: _name }: { name: string }) {
           Veja agora o método feito para o <span className="text-primary">seu perfil</span>
         </h2>
         <button
+          id="btn-vsl-open"
+          data-track="vsl_open"
           onClick={() => {
             track("ViewContent", { content_name: "VSL Open" });
             setOpened(true);
@@ -315,10 +333,14 @@ export function OfferView({ name: _name }: { name: string }) {
       {showCta && (
         <div className="w-full max-w-md mx-auto mt-6 animate-pop-in">
           <a
+            id="btn-checkout"
+            data-track="initiate_checkout"
             href={CHECKOUT_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => track("InitiateCheckout", { content_name: "VSL CTA" })}
+            onClick={() =>
+              track("InitiateCheckout", { content_name: "VSL CTA", currency: "BRL", value: 47 })
+            }
             className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/40"
             style={{ background: "var(--gradient-primary)" }}
           >

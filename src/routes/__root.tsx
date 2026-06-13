@@ -92,6 +92,15 @@ if(document.readyState==='complete'){('requestIdleCallback' in window?requestIdl
 else{window.addEventListener('load',function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));});}
 })();`;
 
+const CLARITY_SCRIPT = `(function(){function l(){(function(c,l,a,r,i,t,y){
+c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "x558ee8vs8");}
+if(document.readyState==='complete'){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));}
+else{window.addEventListener('load',function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));});}
+})();`;
+
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -99,6 +108,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
         <script dangerouslySetInnerHTML={{ __html: GTM_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: META_PIXEL_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: CLARITY_SCRIPT }} />
         <noscript>
           <img
             height="1"
