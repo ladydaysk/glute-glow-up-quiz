@@ -58,10 +58,7 @@ export function TransformView({ onNext }: { onNext: () => void }) {
       <button
         id="btn-transform-continue"
         data-track="transform_continue"
-        onClick={() => {
-          track("ViewContent", { content_name: "Transform Continue" });
-          onNext();
-        }}
+        onClick={onNext}
         className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform"
         style={{ background: "var(--gradient-primary)" }}
       >
