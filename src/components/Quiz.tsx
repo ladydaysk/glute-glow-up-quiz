@@ -155,7 +155,6 @@ export default function Quiz() {
               t={testimonials[testIndex]}
               counter={counter}
               onNext={() => {
-                track("AddToCart", { content_name: "Quiz Offer" });
                 setStep({ kind: "offer" });
               }}
             />
