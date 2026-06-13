@@ -33,12 +33,6 @@ export default function Quiz() {
 
   useEffect(() => {
     setCounter(487 + Math.floor(Math.random() * 60));
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("purchase") === "success") {
-        track("Purchase", { currency: "BRL", value: 47 });
-      }
-    }
   }, []);
 
   // Live popup
