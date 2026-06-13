@@ -66,6 +66,8 @@ export const Route = createRootRoute({
       },
       { rel: "preconnect", href: "https://connect.facebook.net" },
       { rel: "dns-prefetch", href: "https://www.facebook.com" },
+      { rel: "dns-prefetch", href: "https://www.googletagmanager.com" },
+      { rel: "dns-prefetch", href: "https://www.clarity.ms" },
     ],
   }),
   shellComponent: RootShell,
@@ -83,13 +85,13 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2495276150874187');
 fbq('track', 'PageView');}
-if(document.readyState==='complete'){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:2500}):setTimeout(l,1500));}
-else{window.addEventListener('load',function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:2500}):setTimeout(l,1500));});}
+if(document.readyState==='complete'){setTimeout(function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:6000}):l());},4000);}
+else{window.addEventListener('load',function(){setTimeout(function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:6000}):l());},4000);});}
 })();`;
 
 const GTM_SCRIPT = `(function(){function l(){window.dataLayer=window.dataLayer||[];window.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=document.getElementsByTagName('script')[0],j=document.createElement('script');j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id=GTM-NCJBZZ4M';f.parentNode.insertBefore(j,f);}
-if(document.readyState==='complete'){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));}
-else{window.addEventListener('load',function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));});}
+if(document.readyState==='complete'){setTimeout(function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:8000}):l());},5000);}
+else{window.addEventListener('load',function(){setTimeout(function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:8000}):l());},5000);});}
 })();`;
 
 const CLARITY_SCRIPT = `(function(){function l(){(function(c,l,a,r,i,t,y){
@@ -97,8 +99,8 @@ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "x558ee8vs8");}
-if(document.readyState==='complete'){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));}
-else{window.addEventListener('load',function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:3500}):setTimeout(l,2500));});}
+if(document.readyState==='complete'){setTimeout(function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:8000}):l());},5000);}
+else{window.addEventListener('load',function(){setTimeout(function(){('requestIdleCallback' in window?requestIdleCallback(l,{timeout:8000}):l());},5000);});}
 })();`;
 
 function RootShell({ children }: { children: React.ReactNode }) {
