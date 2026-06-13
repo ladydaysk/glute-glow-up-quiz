@@ -145,7 +145,6 @@ export default function Quiz() {
             <ResultView
               name={name}
               onNext={() => {
-                track("ViewContent", { content_name: "Quiz Result" });
                 setStep({ kind: "social" });
               }}
             />
