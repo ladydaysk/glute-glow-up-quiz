@@ -382,9 +382,9 @@ export function OfferView({ name: _name }: { name: string }) {
               Seu acesso hoje
             </p>
             <p className="text-4xl font-bold leading-none">
-              10x <span className="text-2xl">de</span> R$ 11,77
+              7x <span className="text-2xl">de</span> R$ 9,47
             </p>
-            <p className="text-sm mt-3 opacity-95">ou R$ 97,90 à vista · acesso vitalício</p>
+            <p className="text-sm mt-3 opacity-95">ou R$ 57,90 à vista · acesso vitalício</p>
           </div>
 
           <a
@@ -401,7 +401,7 @@ export function OfferView({ name: _name }: { name: string }) {
               track("InitiateCheckout", {
                 content_name: "Oferta CTA",
                 currency: "BRL",
-                value: 97.9,
+                value: 57.9,
               });
             }}
             className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/40"
