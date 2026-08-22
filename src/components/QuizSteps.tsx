@@ -275,31 +275,35 @@ const CHECKOUT_URL = "https://pay.kiwify.com.br/gM257BR";
 /** Oferta principal. Os itens somam R$ 197 — o mesmo "valor antigo" do checkout. */
 const METODO = [
   {
-    titulo: "Treino na Academia — do iniciante ao avançado",
+    emoji: "🏋️",
+    titulo: "Treino na Academia",
     texto:
-      "O caminho completo do primeiro dia ao avançado, com progressão de carga semana a semana. Você entra e já tem seu Plano de Ação do Dia 1.",
+      "Do iniciante ao avançado, com progressão de carga semana a semana. Você entra e já tem seu Plano de Ação do Dia 1.",
     valor: "R$ 97",
   },
   {
+    emoji: "🍽️",
     titulo: "Alimentação para ganho de massa",
     texto:
-      "Cardápio completo, planilha de alimentação e planner de dieta — o combustível calibrado pra crescer sem engordar de forma descontrolada.",
+      "Cardápio, planilha de alimentação e planner de dieta — o combustível calibrado pra crescer.",
     valor: "R$ 47",
   },
   {
+    emoji: "🍑",
     titulo: "Ativação de Glúteo",
-    texto:
-      "O que faz o glúteo realmente trabalhar. Sem isso você treina e a perna cresce no lugar do bumbum.",
+    texto: "O que faz o glúteo realmente trabalhar. Sem isso a perna cresce no lugar do bumbum.",
     valor: "R$ 27",
   },
   {
-    titulo: "Planilha de treino com progressão",
-    texto: "Onde você registra carga e evolução — é o que transforma treino em resultado visível.",
+    emoji: "📋",
+    titulo: "Planilha de treino",
+    texto: "Onde você registra carga e evolução — o que transforma treino em resultado.",
     valor: "R$ 17",
   },
   {
+    emoji: "🤸",
     titulo: "Mobilidade e aquecimento",
-    texto: "Inferiores e superiores: prepara o corpo, previne lesão e melhora cada execução.",
+    texto: "Prepara o corpo, previne lesão e melhora cada execução.",
     valor: "R$ 9",
   },
 ];
@@ -307,36 +311,43 @@ const METODO = [
 /** Bonus — somam R$ 155, quase 3x o preco de hoje. */
 const BONUS = [
   {
+    emoji: "🔥",
     titulo: "Projeto Tanajura",
     texto: "O treino gravado focado em volume de glúteo — o queridinho das alunas.",
     valor: "R$ 57",
     destaque: true,
   },
   {
-    titulo: "Treino em casa (aulas gravadas)",
-    texto: "Todos os níveis usando só uma mini band, pra quando não der pra ir na academia.",
+    emoji: "🏠",
+    titulo: "Treino em casa",
+    texto: "Todos os níveis com só uma mini band.",
     valor: "R$ 37",
   },
   {
-    titulo: "+500 receitas fit e Receitas Seca Barriga",
-    texto: "Receitas práticas pra manter constância e reduzir inchaço.",
+    emoji: "🥗",
+    titulo: "+500 receitas fit e Seca Barriga",
+    texto: "Pra manter constância e reduzir inchaço.",
     valor: "R$ 27",
   },
   {
+    emoji: "🧠",
     titulo: "Planilha Mentalidade",
-    texto: "O processo de disciplina que faz você não parar na segunda semana.",
+    texto: "A disciplina que faz você não parar na segunda semana.",
     valor: "R$ 17",
   },
   {
+    emoji: "💬",
     titulo: "Grupo VIP no WhatsApp",
-    texto: "Suporte direto, dicas diárias e desafios. Vagas limitadas.",
+    texto: "Suporte direto e dicas diárias. Vagas limitadas.",
     valor: "R$ 17",
   },
 ];
 
 const VALOR_METODO = "R$ 197";
 const VALOR_BONUS = "R$ 155";
-const VALOR_TOTAL = "R$ 352";
+/** R$ 352 (197 + 155) menos os R$ 57,90 de hoje. */
+const ECONOMIA = "R$ 294";
+const DESCONTO = "84%";
 
 export function OfferView({ name: _name }: { name: string }) {
   const [opened, setOpened] = useState(false);
@@ -391,103 +402,159 @@ export function OfferView({ name: _name }: { name: string }) {
             </p>
           </div>
 
-          {/* OFERTA PRINCIPAL — card com anel e cabecalho em gradiente */}
-          <div className="rounded-3xl overflow-hidden mb-5 text-left shadow-[var(--shadow-card)] ring-2 ring-primary/40">
-            <div className="p-6 text-white" style={{ background: "var(--gradient-primary)" }}>
-              <span className="inline-block text-[10px] uppercase tracking-[0.18em] font-bold rounded-full px-2.5 py-1 mb-3 bg-white/25">
+          {/* OFERTA PRINCIPAL — anel grosso separa do resto da tela */}
+          <div className="rounded-3xl overflow-hidden mb-[18px] text-left shadow-[var(--shadow-soft)] ring-[3px] ring-primary/55">
+            <div className="px-5 py-[22px] text-white" style={{ background: "var(--gradient-primary)" }}>
+              <span className="inline-block text-[10px] uppercase tracking-[0.16em] font-bold rounded-full px-[11px] py-[5px] mb-3 bg-white/25">
                 ⭐ A oferta principal
               </span>
-              <h3 className="text-2xl font-bold leading-tight">Método LadyDaysk</h3>
-              <p className="text-sm opacity-95 mt-1">
+              <h3 className="text-[28px] font-extrabold leading-[1.1] tracking-tight">
+                Método LadyDaysk
+              </h3>
+              <p className="text-sm opacity-95 mt-1.5">
                 Treino completo, alimentação e glúteo — o sistema inteiro.
               </p>
-              <p className="mt-4 text-sm">
-                <span className="opacity-80">valor </span>
-                <span className="text-xl font-bold line-through">{VALOR_METODO}</span>
-              </p>
+              <div className="flex items-baseline justify-between mt-4 pt-3.5 border-t border-white/30">
+                <span className="text-[13px] opacity-90">valor do método</span>
+                <span className="text-[22px] font-extrabold line-through">{VALOR_METODO}</span>
+              </div>
             </div>
 
-            <div className="bg-card p-6">
-              <ul className="space-y-4">
+            <div className="bg-card px-5 pt-1.5 pb-5">
+              <div className="flex items-center gap-2 pt-4 pb-1 text-xs font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                <span>{METODO.length} entregáveis</span>
+                <span className="flex-1 h-px bg-border" />
+              </div>
+
+              <ul>
                 {METODO.map((item) => (
-                  <li key={item.titulo}>
-                    <div className="flex gap-2 items-baseline justify-between">
-                      <p className="font-semibold text-foreground leading-snug">
-                        <span className="text-primary mr-1.5">✓</span>
-                        {item.titulo}
+                  <li
+                    key={item.titulo}
+                    className="flex gap-3 py-[15px] border-b border-border last:border-b-0"
+                  >
+                    <span className="shrink-0 h-[30px] w-[30px] rounded-[10px] grid place-items-center text-[15px] bg-rose/55">
+                      {item.emoji}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex gap-2.5 items-baseline justify-between">
+                        <p className="font-bold text-[15px] text-foreground leading-snug">
+                          {item.titulo}
+                        </p>
+                        <span className="shrink-0 text-xs text-muted-foreground line-through tabular-nums">
+                          {item.valor}
+                        </span>
+                      </div>
+                      <p className="text-[13.5px] text-muted-foreground leading-snug mt-0.5">
+                        {item.texto}
                       </p>
-                      <span className="shrink-0 text-xs text-muted-foreground line-through">
-                        {item.valor}
-                      </span>
                     </div>
-                    <p className="text-sm text-muted-foreground leading-snug mt-0.5 pl-5">
-                      {item.texto}
-                    </p>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
 
-          {/* BONUS — card secundario */}
-          <div className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-5 text-left border border-border">
-            <p className="text-xs uppercase tracking-[0.18em] text-primary font-bold">
-              🎁 Bônus de hoje
-            </p>
-            <p className="text-sm font-semibold text-foreground mb-5 mt-1">
-              Liberados só para quem entrar hoje
-            </p>
+          {/* BONUS — fundo rosa e borda tracejada pra destacar do resto */}
+          <div
+            className="rounded-3xl p-5 mb-[18px] text-left border-2 border-dashed border-primary/45"
+            style={{
+              background:
+                "linear-gradient(180deg, color-mix(in oklab, var(--rose) 45%, transparent), color-mix(in oklab, var(--nude) 60%, transparent))",
+            }}
+          >
+            <div className="text-center">
+              <p className="text-[11px] uppercase tracking-[0.2em] font-extrabold text-primary">
+                🎁 Bônus
+              </p>
+              <p className="text-[19px] font-extrabold text-foreground mt-1.5">
+                + {BONUS.length} bônus liberados
+              </p>
+              <span className="inline-block mt-2.5 mb-4 bg-primary text-white text-[11.5px] font-extrabold uppercase tracking-[0.06em] px-3.5 py-[7px] rounded-full">
+                ⏳ Só para quem entrar hoje
+              </span>
+            </div>
 
-            <ul className="space-y-4">
+            <ul className="space-y-[9px]">
               {BONUS.map((item) => (
                 <li
                   key={item.titulo}
-                  className={
-                    item.destaque ? "rounded-2xl bg-rose/40 border border-primary/30 p-4" : ""
-                  }
+                  className={`bg-card rounded-2xl px-3.5 py-3 flex gap-[11px] ${
+                    item.destaque ? "border-2 border-primary shadow-[var(--shadow-soft)]" : ""
+                  }`}
                 >
-                  {item.destaque && (
-                    <span className="inline-block text-[10px] uppercase tracking-[0.15em] font-bold text-white rounded-full px-2.5 py-1 mb-2 bg-primary">
-                      ⭐ Destaque
-                    </span>
-                  )}
-                  <div className="flex gap-2 items-baseline justify-between">
-                    <p className="font-semibold text-foreground leading-snug">{item.titulo}</p>
-                    <span className="shrink-0 text-xs text-muted-foreground line-through">
-                      {item.valor}
-                    </span>
+                  <span className="shrink-0 h-[30px] w-[30px] rounded-[10px] grid place-items-center text-[15px] bg-rose/55">
+                    {item.emoji}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    {item.destaque && (
+                      <span
+                        className="inline-block text-[10px] uppercase tracking-[0.14em] font-extrabold text-white rounded-full px-2.5 py-1 mb-[7px]"
+                        style={{ background: "var(--gradient-primary)" }}
+                      >
+                        ⭐ Destaque
+                      </span>
+                    )}
+                    <div className="flex gap-2.5 items-baseline justify-between">
+                      <p className="font-bold text-[15px] text-foreground leading-snug">
+                        {item.titulo}
+                      </p>
+                      <span className="shrink-0 text-[10.5px] font-extrabold tracking-[0.08em] text-primary">
+                        GRÁTIS
+                      </span>
+                    </div>
+                    <p className="text-[13.5px] text-muted-foreground leading-snug mt-0.5">
+                      {item.texto}{" "}
+                      <span className="line-through tabular-nums">{item.valor}</span>
+                    </p>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-snug mt-0.5">{item.texto}</p>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-6 pt-5 border-t border-border">
-              <p className="text-center text-foreground">
+            <div className="mt-[15px] bg-card rounded-2xl p-3.5 text-center">
+              <p className="text-sm text-foreground">
                 Só em bônus você leva{" "}
-                <span className="text-primary font-bold">{VALOR_BONUS}</span>
+                <span className="text-primary text-xl font-extrabold">{VALOR_BONUS}</span>
               </p>
             </div>
           </div>
 
-          {/* Soma */}
-          <div className="flex items-baseline justify-between mb-4 px-2">
-            <p className="font-semibold text-foreground">Valor total</p>
-            <p className="text-lg font-bold text-muted-foreground line-through">{VALOR_TOTAL}</p>
+          {/* ECONOMIA */}
+          <div
+            className="rounded-3xl px-5 py-[22px] mb-4 text-white text-center shadow-[var(--shadow-soft)]"
+            style={{ background: "var(--gradient-primary)" }}
+          >
+            <div className="flex justify-between text-sm py-[5px]">
+              <span>Método</span>
+              <s className="opacity-85 tabular-nums">{VALOR_METODO}</s>
+            </div>
+            <div className="flex justify-between text-sm py-[5px]">
+              <span>Bônus de hoje</span>
+              <s className="opacity-85 tabular-nums">{VALOR_BONUS}</s>
+            </div>
+            <div className="h-px bg-white/30 mt-2.5 mb-3.5" />
+            <p className="text-xs uppercase tracking-[0.18em] font-bold opacity-95">
+              Você economiza
+            </p>
+            <p className="text-[40px] font-extrabold leading-[1.05] tracking-tight mt-1 tabular-nums">
+              {ECONOMIA}
+            </p>
+            <span className="inline-block bg-white text-[12px] font-extrabold px-3 py-[5px] rounded-full mt-2 tracking-[0.05em] text-[oklch(0.62_0.2_18)]">
+              {DESCONTO} de desconto hoje
+            </span>
           </div>
 
           {/* Preco */}
-          <div
-            className="rounded-3xl p-6 mb-4 text-white text-center"
-            style={{ background: "var(--gradient-primary)" }}
-          >
-            <p className="text-xs uppercase tracking-[0.2em] font-semibold opacity-90 mb-2">
+          <div className="rounded-3xl bg-card border-2 border-primary p-5 mb-3.5 text-center">
+            <p className="text-[11px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
               Seu acesso hoje
             </p>
-            <p className="text-4xl font-bold leading-none">
-              7x <span className="text-2xl">de</span> R$ 9,47
+            <p className="text-[38px] font-extrabold leading-[1.05] tracking-tight mt-2 text-foreground">
+              7x <span className="text-xl">de</span> R$ 9,47
             </p>
-            <p className="text-sm mt-3 opacity-95">ou R$ 57,90 à vista · acesso vitalício</p>
+            <p className="text-[13.5px] text-muted-foreground mt-2">
+              ou R$ 57,90 à vista · acesso vitalício
+            </p>
           </div>
 
           <a
