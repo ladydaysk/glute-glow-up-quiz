@@ -82,6 +82,9 @@ export function QuestionView({
   showNote: boolean;
 }) {
   const [picked, setPicked] = useState<string | null>(null);
+  // `picked` so vale depois do re-render; cliques no mesmo instante ainda leriam
+  // null e mandariam o evento de novo. O ref muda na hora e corta isso.
+  const answered = useRef(false);
   return (
     <div className="animate-slide-up">
       <p className="text-sm text-primary font-semibold mb-2">
@@ -97,12 +100,17 @@ export function QuestionView({
               key={opt}
               id={`btn-quiz-q${current}-option-${i}`}
               data-track={`quiz_answer_q${current}`}
+              disabled={picked !== null}
               onClick={() => {
+                // Perguntas com "note" ficam 3s na tela depois do clique; sem essa
+                // trava o usuario clica de novo e o evento sai duplicado.
+                if (answered.current) return;
+                answered.current = true;
                 setPicked(opt);
                 track("AnswerQuestion", { content_name: `Q${current}`, value: opt });
                 setTimeout(() => onSelect(opt), 250);
               }}
-              className={`w-full text-left p-5 rounded-2xl bg-card border-2 transition-all hover:scale-[1.01] active:scale-[0.99] ${
+              className={`w-full text-left p-5 rounded-2xl bg-card border-2 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:cursor-default ${
                 active
                   ? "border-primary shadow-[var(--shadow-soft)]"
                   : "border-border hover:border-primary/40"
@@ -125,6 +133,7 @@ export function QuestionView({
 
 export function NameView({ onSubmit }: { onSubmit: (name: string) => void }) {
   const [v, setV] = useState("");
+  const submitted = useRef(false);
   return (
     <div className="animate-slide-up flex flex-col pt-4">
       <h2 className="text-2xl font-bold mb-2 text-foreground">Antes de mostrar seu resultado…</h2>
@@ -142,7 +151,11 @@ export function NameView({ onSubmit }: { onSubmit: (name: string) => void }) {
         id="btn-name-submit"
         data-track="quiz_name_submit"
         disabled={!v.trim()}
-        onClick={() => onSubmit(v.trim().split(" ")[0])}
+        onClick={() => {
+          if (submitted.current) return;
+          submitted.current = true;
+          onSubmit(v.trim().split(" ")[0]);
+        }}
         className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ background: "var(--gradient-primary)" }}
       >
@@ -262,6 +275,10 @@ export function OfferView({ name: _name }: { name: string }) {
   const [showCta, setShowCta] = useState(false);
   const videoRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // O checkout abre em outra aba e esta pagina continua viva: sem essa trava
+  // cada clique repetido no botao mandaria outro InitiateCheckout.
+  const checkoutTracked = useRef(false);
+  const vslTracked = useRef(false);
 
   useEffect(() => {
     if (!opened) return;
@@ -294,6 +311,8 @@ export function OfferView({ name: _name }: { name: string }) {
           id="btn-vsl-open"
           data-track="vsl_open"
           onClick={() => {
+            if (vslTracked.current) return;
+            vslTracked.current = true;
             track("ViewContent", { content_name: "VSL Open" });
             setOpened(true);
           }}
@@ -335,9 +354,11 @@ export function OfferView({ name: _name }: { name: string }) {
             href={CHECKOUT_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() =>
-              track("InitiateCheckout", { content_name: "VSL CTA", currency: "BRL", value: 47 })
-            }
+            onClick={() => {
+              if (checkoutTracked.current) return;
+              checkoutTracked.current = true;
+              track("InitiateCheckout", { content_name: "VSL CTA", currency: "BRL", value: 47 });
+            }}
             className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/40"
             style={{ background: "var(--gradient-primary)" }}
           >

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { track } from "@/lib/fbq";
 import { questions, testimonials, type Step } from "./quiz-data";
 
@@ -195,6 +195,8 @@ function Intro({
   onHover: () => void;
   counter: number;
 }) {
+  const started = useRef(false);
+
   // Prefetch the next chunk shortly after first paint
   useEffect(() => {
     const id = setTimeout(onHover, 1200);
@@ -225,6 +227,8 @@ function Intro({
         id="btn-quiz-start"
         data-track="quiz_start"
         onClick={() => {
+          if (started.current) return;
+          started.current = true;
           track("StartQuiz", { content_name: "Quiz Start" });
           onStart();
         }}
