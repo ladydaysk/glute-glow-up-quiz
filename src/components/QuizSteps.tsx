@@ -274,48 +274,37 @@ const CHECKOUT_URL = "https://pay.kiwify.com.br/gM257BR";
 
 export function OfferView({ name: _name }: { name: string }) {
   const [opened, setOpened] = useState(false);
-  const [showCta, setShowCta] = useState(false);
-  const videoRef = useRef<HTMLDivElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   // O checkout abre em outra aba e esta pagina continua viva: sem essa trava
   // cada clique repetido no botao mandaria outro InitiateCheckout.
   const checkoutTracked = useRef(false);
-  const vslTracked = useRef(false);
+  const offerTracked = useRef(false);
 
   useEffect(() => {
     if (!opened) return;
     const t = setTimeout(() => {
-      videoRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      ctaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 80);
     return () => clearTimeout(t);
   }, [opened]);
 
-  useEffect(() => {
-    if (!opened) return;
-    timerRef.current = setTimeout(() => {
-      setShowCta(true);
-    }, 120000); // 2 minutos
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [opened]);
+  return (
+    <div className="animate-fade-in pt-6 flex flex-col items-center text-center">
+      <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
+        SEU PLANO ESTÁ PRONTO
+      </span>
+      <h2 className="text-2xl sm:text-3xl font-bold text-foreground leading-snug mb-8">
+        Veja agora o método feito para o <span className="text-primary">seu perfil</span>
+      </h2>
 
-  if (!opened) {
-    return (
-      <div className="animate-fade-in pt-6 flex flex-col items-center text-center">
-        <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
-          SEU PLANO ESTÁ PRONTO
-        </span>
-        <h2 className="text-2xl sm:text-3xl font-bold text-foreground leading-snug mb-8">
-          Veja agora o método feito para o <span className="text-primary">seu perfil</span>
-        </h2>
+      {!opened ? (
         <button
-          id="btn-vsl-open"
-          data-track="vsl_open"
+          id="btn-ver-plano"
+          data-track="ver_plano"
           onClick={() => {
-            if (vslTracked.current) return;
-            vslTracked.current = true;
-            track("ViewContent", { content_name: "VSL Open" });
+            if (offerTracked.current) return;
+            offerTracked.current = true;
+            track("ViewContent", { content_name: "Oferta" });
             setOpened(true);
           }}
           className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/30"
@@ -323,33 +312,8 @@ export function OfferView({ name: _name }: { name: string }) {
         >
           VER MEU PLANO PERSONALIZADO →
         </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="animate-fade-in pt-2 flex flex-col items-center">
-      <div
-        ref={videoRef}
-        className="relative w-full max-w-[280px] sm:max-w-[320px] mx-auto overflow-hidden rounded-3xl bg-black shadow-[0_20px_60px_-15px_oklch(0.68_0.18_12/0.45)] ring-1 ring-primary/20"
-        style={{ aspectRatio: "9 / 16" }}
-      >
-        <iframe
-          src="https://fast.wistia.net/embed/iframe/fq9blvv7ui?seo=false&videoFoam=true&autoPlay=true&silentAutoPlay=false"
-          title="Meu plano"
-          loading="eager"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-          className="absolute inset-0 h-full w-full border-0"
-        />
-      </div>
-
-      <p className="text-center text-sm text-muted-foreground mt-4 max-w-xs">
-        Assista até o final para liberar seu acesso 💗
-      </p>
-
-      {showCta && (
-        <div className="w-full max-w-md mx-auto mt-6 animate-pop-in">
+      ) : (
+        <div ref={ctaRef} className="w-full max-w-md mx-auto animate-pop-in">
           <a
             id="btn-checkout"
             data-track="initiate_checkout"
@@ -359,7 +323,7 @@ export function OfferView({ name: _name }: { name: string }) {
             onClick={() => {
               if (checkoutTracked.current) return;
               checkoutTracked.current = true;
-              track("InitiateCheckout", { content_name: "VSL CTA", currency: "BRL", value: 47 });
+              track("InitiateCheckout", { content_name: "Oferta CTA", currency: "BRL", value: 47 });
             }}
             className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/40"
             style={{ background: "var(--gradient-primary)" }}
