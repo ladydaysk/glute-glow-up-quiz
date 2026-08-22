@@ -272,6 +272,29 @@ export function SocialView({
 
 const CHECKOUT_URL = "https://pay.kiwify.com.br/gM257BR";
 
+const ENTREGAVEIS = [
+  {
+    titulo: "Método LadyDaysk",
+    texto: "O passo a passo completo: qual treino fazer, como fazer e quando fazer.",
+    principal: true,
+  },
+  {
+    titulo: "Treino em casa (aulas gravadas)",
+    texto: "Para crescer o bumbum em casa usando só uma miniband.",
+  },
+  {
+    titulo: "Planilhas de treino",
+    texto: "Iniciante, intermediário e avançado — com progressão estruturada.",
+  },
+  {
+    titulo: "Cardápios para ganho de massa",
+    texto: "Alimentação organizada para crescer sem engordar de forma descontrolada.",
+  },
+  { titulo: "E-book com +500 receitas fit", texto: "Receitas práticas que cabem na vida real." },
+  { titulo: "Receitas Seca Barriga", texto: "Para reduzir inchaço enquanto o corpo cresce." },
+  { titulo: "Grupo VIP no WhatsApp", texto: "Suporte direto e dicas diárias. Vagas limitadas." },
+];
+
 export function OfferView({ name: _name }: { name: string }) {
   const [opened, setOpened] = useState(false);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -283,7 +306,8 @@ export function OfferView({ name: _name }: { name: string }) {
   useEffect(() => {
     if (!opened) return;
     const t = setTimeout(() => {
-      ctaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      // "start" e nao "center": o bloco de oferta e longo, centralizar cortaria o topo.
+      ctaRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 80);
     return () => clearTimeout(t);
   }, [opened]);
@@ -313,7 +337,56 @@ export function OfferView({ name: _name }: { name: string }) {
           VER MEU PLANO PERSONALIZADO →
         </button>
       ) : (
-        <div ref={ctaRef} className="w-full max-w-md mx-auto animate-pop-in">
+        <div ref={ctaRef} className="w-full animate-pop-in">
+          {/* Por que funciona */}
+          <div className="rounded-2xl bg-rose/40 border border-primary/20 p-5 mb-6 text-left">
+            <p className="text-foreground leading-relaxed">
+              O problema nunca foi o seu esforço. Foi treinar com um método feito para{" "}
+              <span className="font-bold">emagrecer</span> — quando você precisa de um feito para{" "}
+              <span className="text-primary font-bold">crescer</span>.
+            </p>
+          </div>
+
+          {/* O que ela recebe */}
+          <div className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-6 text-left">
+            <h3 className="text-xl font-bold text-foreground mb-1">Tudo que você recebe</h3>
+            <p className="text-sm text-muted-foreground mb-5">
+              Acesso imediato e vitalício, tudo dentro da mesma área.
+            </p>
+
+            <ul className="space-y-4">
+              {ENTREGAVEIS.map((item) => (
+                <li key={item.titulo} className="flex gap-3 items-start">
+                  <span className="shrink-0 text-lg leading-6">{item.principal ? "🔥" : "🎁"}</span>
+                  <div>
+                    <p
+                      className={`font-semibold leading-snug ${
+                        item.principal ? "text-primary" : "text-foreground"
+                      }`}
+                    >
+                      {item.titulo}
+                    </p>
+                    <p className="text-sm text-muted-foreground leading-snug">{item.texto}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Preco */}
+          <div
+            className="rounded-3xl p-6 mb-4 text-white text-center"
+            style={{ background: "var(--gradient-primary)" }}
+          >
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold opacity-90 mb-2">
+              Seu acesso hoje
+            </p>
+            <p className="text-4xl font-bold leading-none">
+              10x <span className="text-2xl">de</span> R$ 11,77
+            </p>
+            <p className="text-sm mt-3 opacity-95">ou R$ 97,90 à vista · acesso vitalício</p>
+          </div>
+
           <a
             id="btn-checkout"
             data-track="initiate_checkout"
@@ -334,8 +407,23 @@ export function OfferView({ name: _name }: { name: string }) {
             className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/40"
             style={{ background: "var(--gradient-primary)" }}
           >
-            QUERO COMEÇAR AGORA →
+            QUERO MEU BUMBUM MAIOR AGORA →
           </a>
+
+          {/* Garantia */}
+          <div className="mt-5 rounded-2xl border border-primary/20 bg-card p-5 text-left">
+            <p className="font-semibold text-foreground mb-1">
+              🔒 Garantia incondicional de 14 dias
+            </p>
+            <p className="text-sm text-muted-foreground leading-snug">
+              Se achar que o método não é pra você, é só pedir o reembolso — sem precisar explicar
+              nada. 100% do seu dinheiro de volta.
+            </p>
+          </div>
+
+          <p className="text-xs text-muted-foreground mt-4 text-center">
+            💖 +500 mulheres já transformaram o corpo com esse método
+          </p>
         </div>
       )}
     </div>
