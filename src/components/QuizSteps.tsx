@@ -323,7 +323,13 @@ export function OfferView({ name: _name }: { name: string }) {
             onClick={() => {
               if (checkoutTracked.current) return;
               checkoutTracked.current = true;
-              track("InitiateCheckout", { content_name: "Oferta CTA", currency: "BRL", value: 47 });
+              // Valor a vista do produto. Precisa bater com o checkout da Kiwify:
+              // e ele que alimenta ROAS e otimizacao por valor no Meta.
+              track("InitiateCheckout", {
+                content_name: "Oferta CTA",
+                currency: "BRL",
+                value: 97.9,
+              });
             }}
             className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/40"
             style={{ background: "var(--gradient-primary)" }}
