@@ -272,32 +272,69 @@ export function SocialView({
 
 const CHECKOUT_URL = "https://pay.kiwify.com.br/gM257BR";
 
-const ENTREGAVEIS = [
+/** Nucleo da oferta — 70% do valor ancorado (R$ 255 de R$ 360). */
+const METODO = [
   {
-    titulo: "Método LadyDaysk",
-    texto: "O passo a passo completo: qual treino fazer, como fazer e quando fazer.",
-    principal: true,
+    titulo: "Treino na Academia — do iniciante ao avançado",
+    texto:
+      "O caminho completo do primeiro dia ao avançado, com progressão de carga semana a semana. Você entra e já tem seu Plano de Ação do Dia 1.",
+    valor: "R$ 127",
   },
   {
-    titulo: "Treino na academia",
-    texto: "Os exercícios certos e a progressão de carga semana a semana para crescer de verdade.",
+    titulo: "Alimentação para ganho de massa",
+    texto:
+      "Cardápio completo, planilha de alimentação e planner de dieta — o combustível calibrado pra crescer sem engordar de forma descontrolada.",
+    valor: "R$ 67",
+  },
+  {
+    titulo: "Ativação de Glúteo",
+    texto:
+      "O que faz o glúteo realmente trabalhar. Sem isso você treina e a perna cresce no lugar do bumbum.",
+    valor: "R$ 37",
+  },
+  {
+    titulo: "Planilha de treino com progressão",
+    texto: "Onde você registra carga e evolução — é o que transforma treino em resultado visível.",
+    valor: "R$ 17",
+  },
+  {
+    titulo: "Mobilidade e aquecimento",
+    texto: "Inferiores e superiores: prepara o corpo, previne lesão e melhora cada execução.",
+    valor: "R$ 7",
+  },
+];
+
+/** Bonus — 30% do valor ancorado (R$ 105 de R$ 360). */
+const BONUS = [
+  {
+    titulo: "Projeto Tanajura",
+    texto: "O treino gravado focado em volume de glúteo — o queridinho das alunas.",
+    valor: "R$ 47",
+    destaque: true,
   },
   {
     titulo: "Treino em casa (aulas gravadas)",
-    texto: "Para crescer o bumbum em casa usando só uma miniband.",
+    texto: "Todos os níveis usando só uma mini band, pra quando não der pra ir na academia.",
+    valor: "R$ 27",
   },
   {
-    titulo: "Planilhas de treino",
-    texto: "Iniciante, intermediário e avançado — com progressão estruturada.",
+    titulo: "+500 receitas fit e Receitas Seca Barriga",
+    texto: "Receitas práticas pra manter constância e reduzir inchaço.",
+    valor: "R$ 17",
   },
   {
-    titulo: "Cardápios para ganho de massa",
-    texto: "Alimentação organizada para crescer sem engordar de forma descontrolada.",
+    titulo: "Planilha Mentalidade",
+    texto: "O processo de disciplina que faz você não parar na segunda semana.",
+    valor: "R$ 7",
   },
-  { titulo: "E-book com +500 receitas fit", texto: "Receitas práticas que cabem na vida real." },
-  { titulo: "Receitas Seca Barriga", texto: "Para reduzir inchaço enquanto o corpo cresce." },
-  { titulo: "Grupo VIP no WhatsApp", texto: "Suporte direto e dicas diárias. Vagas limitadas." },
+  {
+    titulo: "Grupo VIP no WhatsApp",
+    texto: "Suporte direto, dicas diárias e desafios. Vagas limitadas.",
+    valor: "R$ 7",
+  },
 ];
+
+const VALOR_TOTAL = "R$ 360";
 
 export function OfferView({ name: _name }: { name: string }) {
   const [opened, setOpened] = useState(false);
@@ -355,27 +392,65 @@ export function OfferView({ name: _name }: { name: string }) {
           {/* O que ela recebe */}
           <div className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-6 text-left">
             <h3 className="text-xl font-bold text-foreground mb-1">Tudo que você recebe</h3>
-            <p className="text-sm text-muted-foreground mb-5">
+            <p className="text-sm text-muted-foreground mb-6">
               Acesso imediato e vitalício, tudo dentro da mesma área.
             </p>
 
+            <p className="text-xs uppercase tracking-[0.18em] text-primary font-bold mb-4">
+              🔥 O método
+            </p>
             <ul className="space-y-4">
-              {ENTREGAVEIS.map((item) => (
-                <li key={item.titulo} className="flex gap-3 items-start">
-                  <span className="shrink-0 text-lg leading-6">{item.principal ? "🔥" : "🎁"}</span>
-                  <div>
-                    <p
-                      className={`font-semibold leading-snug ${
-                        item.principal ? "text-primary" : "text-foreground"
-                      }`}
-                    >
-                      {item.titulo}
-                    </p>
-                    <p className="text-sm text-muted-foreground leading-snug">{item.texto}</p>
+              {METODO.map((item) => (
+                <li key={item.titulo}>
+                  <div className="flex gap-2 items-baseline justify-between">
+                    <p className="font-semibold text-foreground leading-snug">{item.titulo}</p>
+                    <span className="shrink-0 text-xs text-muted-foreground line-through">
+                      {item.valor}
+                    </span>
                   </div>
+                  <p className="text-sm text-muted-foreground leading-snug mt-0.5">{item.texto}</p>
                 </li>
               ))}
             </ul>
+
+            <div className="my-6 border-t border-border" />
+
+            <p className="text-xs uppercase tracking-[0.18em] text-primary font-bold">
+              🎁 Bônus de hoje
+            </p>
+            <p className="text-sm font-semibold text-foreground mb-4 mt-1">
+              Liberados só para quem entrar hoje
+            </p>
+            <ul className="space-y-4">
+              {BONUS.map((item) => (
+                <li
+                  key={item.titulo}
+                  className={
+                    item.destaque ? "rounded-2xl bg-rose/40 border border-primary/30 p-4" : ""
+                  }
+                >
+                  {item.destaque && (
+                    <span className="inline-block text-[10px] uppercase tracking-[0.15em] font-bold text-white rounded-full px-2.5 py-1 mb-2 bg-primary">
+                      ⭐ Destaque
+                    </span>
+                  )}
+                  <div className="flex gap-2 items-baseline justify-between">
+                    <p className="font-semibold text-foreground leading-snug">{item.titulo}</p>
+                    <span className="shrink-0 text-xs text-muted-foreground line-through">
+                      {item.valor}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-snug mt-0.5">{item.texto}</p>
+                </li>
+              ))}
+            </ul>
+
+            <div className="my-6 border-t border-border" />
+
+            <div className="flex items-baseline justify-between">
+              <p className="font-semibold text-foreground">Valor total</p>
+              <p className="text-lg font-bold text-muted-foreground line-through">{VALOR_TOTAL}</p>
+            </div>
           </div>
 
           {/* Preco */}
