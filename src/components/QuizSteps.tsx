@@ -279,6 +279,10 @@ const ENTREGAVEIS = [
     principal: true,
   },
   {
+    titulo: "Treino na academia",
+    texto: "Os exercícios certos e a progressão de carga semana a semana para crescer de verdade.",
+  },
+  {
     titulo: "Treino em casa (aulas gravadas)",
     texto: "Para crescer o bumbum em casa usando só uma miniband.",
   },
@@ -340,10 +344,11 @@ export function OfferView({ name: _name }: { name: string }) {
         <div ref={ctaRef} className="w-full animate-pop-in">
           {/* Por que funciona */}
           <div className="rounded-2xl bg-rose/40 border border-primary/20 p-5 mb-6 text-left">
+            <p className="text-lg font-bold text-foreground mb-2">Você nunca foi o problema.</p>
             <p className="text-foreground leading-relaxed">
-              O problema nunca foi o seu esforço. Foi treinar com um método feito para{" "}
-              <span className="font-bold">emagrecer</span> — quando você precisa de um feito para{" "}
-              <span className="text-primary font-bold">crescer</span>.
+              Tudo que te ensinaram foi feito pra <span className="font-bold">secar</span>. E secar
+              é o oposto de <span className="text-primary font-bold">crescer</span> — por isso você
+              se esforçava e o espelho não mudava.
             </p>
           </div>
 
