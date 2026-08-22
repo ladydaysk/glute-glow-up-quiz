@@ -272,25 +272,25 @@ export function SocialView({
 
 const CHECKOUT_URL = "https://pay.kiwify.com.br/gM257BR";
 
-/** Nucleo da oferta — 70% do valor ancorado (R$ 255 de R$ 360). */
+/** Oferta principal. Os itens somam R$ 197 — o mesmo "valor antigo" do checkout. */
 const METODO = [
   {
     titulo: "Treino na Academia — do iniciante ao avançado",
     texto:
       "O caminho completo do primeiro dia ao avançado, com progressão de carga semana a semana. Você entra e já tem seu Plano de Ação do Dia 1.",
-    valor: "R$ 127",
+    valor: "R$ 97",
   },
   {
     titulo: "Alimentação para ganho de massa",
     texto:
       "Cardápio completo, planilha de alimentação e planner de dieta — o combustível calibrado pra crescer sem engordar de forma descontrolada.",
-    valor: "R$ 67",
+    valor: "R$ 47",
   },
   {
     titulo: "Ativação de Glúteo",
     texto:
       "O que faz o glúteo realmente trabalhar. Sem isso você treina e a perna cresce no lugar do bumbum.",
-    valor: "R$ 37",
+    valor: "R$ 27",
   },
   {
     titulo: "Planilha de treino com progressão",
@@ -300,41 +300,43 @@ const METODO = [
   {
     titulo: "Mobilidade e aquecimento",
     texto: "Inferiores e superiores: prepara o corpo, previne lesão e melhora cada execução.",
-    valor: "R$ 7",
+    valor: "R$ 9",
   },
 ];
 
-/** Bonus — 30% do valor ancorado (R$ 105 de R$ 360). */
+/** Bonus — somam R$ 155, quase 3x o preco de hoje. */
 const BONUS = [
   {
     titulo: "Projeto Tanajura",
     texto: "O treino gravado focado em volume de glúteo — o queridinho das alunas.",
-    valor: "R$ 47",
+    valor: "R$ 57",
     destaque: true,
   },
   {
     titulo: "Treino em casa (aulas gravadas)",
     texto: "Todos os níveis usando só uma mini band, pra quando não der pra ir na academia.",
-    valor: "R$ 27",
+    valor: "R$ 37",
   },
   {
     titulo: "+500 receitas fit e Receitas Seca Barriga",
     texto: "Receitas práticas pra manter constância e reduzir inchaço.",
-    valor: "R$ 17",
+    valor: "R$ 27",
   },
   {
     titulo: "Planilha Mentalidade",
     texto: "O processo de disciplina que faz você não parar na segunda semana.",
-    valor: "R$ 7",
+    valor: "R$ 17",
   },
   {
     titulo: "Grupo VIP no WhatsApp",
     texto: "Suporte direto, dicas diárias e desafios. Vagas limitadas.",
-    valor: "R$ 7",
+    valor: "R$ 17",
   },
 ];
 
-const VALOR_TOTAL = "R$ 360";
+const VALOR_METODO = "R$ 197";
+const VALOR_BONUS = "R$ 155";
+const VALOR_TOTAL = "R$ 352";
 
 export function OfferView({ name: _name }: { name: string }) {
   const [opened, setOpened] = useState(false);
@@ -389,38 +391,53 @@ export function OfferView({ name: _name }: { name: string }) {
             </p>
           </div>
 
-          {/* O que ela recebe */}
-          <div className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-6 text-left">
-            <h3 className="text-xl font-bold text-foreground mb-1">Tudo que você recebe</h3>
-            <p className="text-sm text-muted-foreground mb-6">
-              Acesso imediato e vitalício, tudo dentro da mesma área.
-            </p>
+          {/* OFERTA PRINCIPAL — card com anel e cabecalho em gradiente */}
+          <div className="rounded-3xl overflow-hidden mb-5 text-left shadow-[var(--shadow-card)] ring-2 ring-primary/40">
+            <div className="p-6 text-white" style={{ background: "var(--gradient-primary)" }}>
+              <span className="inline-block text-[10px] uppercase tracking-[0.18em] font-bold rounded-full px-2.5 py-1 mb-3 bg-white/25">
+                ⭐ A oferta principal
+              </span>
+              <h3 className="text-2xl font-bold leading-tight">Método LadyDaysk</h3>
+              <p className="text-sm opacity-95 mt-1">
+                Treino completo, alimentação e glúteo — o sistema inteiro.
+              </p>
+              <p className="mt-4 text-sm">
+                <span className="opacity-80">valor </span>
+                <span className="text-xl font-bold line-through">{VALOR_METODO}</span>
+              </p>
+            </div>
 
-            <p className="text-xs uppercase tracking-[0.18em] text-primary font-bold mb-4">
-              🔥 O método
-            </p>
-            <ul className="space-y-4">
-              {METODO.map((item) => (
-                <li key={item.titulo}>
-                  <div className="flex gap-2 items-baseline justify-between">
-                    <p className="font-semibold text-foreground leading-snug">{item.titulo}</p>
-                    <span className="shrink-0 text-xs text-muted-foreground line-through">
-                      {item.valor}
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-snug mt-0.5">{item.texto}</p>
-                </li>
-              ))}
-            </ul>
+            <div className="bg-card p-6">
+              <ul className="space-y-4">
+                {METODO.map((item) => (
+                  <li key={item.titulo}>
+                    <div className="flex gap-2 items-baseline justify-between">
+                      <p className="font-semibold text-foreground leading-snug">
+                        <span className="text-primary mr-1.5">✓</span>
+                        {item.titulo}
+                      </p>
+                      <span className="shrink-0 text-xs text-muted-foreground line-through">
+                        {item.valor}
+                      </span>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-snug mt-0.5 pl-5">
+                      {item.texto}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-            <div className="my-6 border-t border-border" />
-
+          {/* BONUS — card secundario */}
+          <div className="bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] mb-5 text-left border border-border">
             <p className="text-xs uppercase tracking-[0.18em] text-primary font-bold">
               🎁 Bônus de hoje
             </p>
-            <p className="text-sm font-semibold text-foreground mb-4 mt-1">
+            <p className="text-sm font-semibold text-foreground mb-5 mt-1">
               Liberados só para quem entrar hoje
             </p>
+
             <ul className="space-y-4">
               {BONUS.map((item) => (
                 <li
@@ -445,12 +462,18 @@ export function OfferView({ name: _name }: { name: string }) {
               ))}
             </ul>
 
-            <div className="my-6 border-t border-border" />
-
-            <div className="flex items-baseline justify-between">
-              <p className="font-semibold text-foreground">Valor total</p>
-              <p className="text-lg font-bold text-muted-foreground line-through">{VALOR_TOTAL}</p>
+            <div className="mt-6 pt-5 border-t border-border">
+              <p className="text-center text-foreground">
+                Só em bônus você leva{" "}
+                <span className="text-primary font-bold">{VALOR_BONUS}</span>
+              </p>
             </div>
+          </div>
+
+          {/* Soma */}
+          <div className="flex items-baseline justify-between mb-4 px-2">
+            <p className="font-semibold text-foreground">Valor total</p>
+            <p className="text-lg font-bold text-muted-foreground line-through">{VALOR_TOTAL}</p>
           </div>
 
           {/* Preco */}
