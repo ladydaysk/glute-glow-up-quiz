@@ -107,7 +107,9 @@ export function QuestionView({
                 if (answered.current) return;
                 answered.current = true;
                 setPicked(opt);
-                track("AnswerQuestion", { content_name: `Q${current}`, value: opt });
+                // A resposta vai em content_category, nao em `value`: no Meta
+                // `value` e valor monetario e alimenta otimizacao/ROAS.
+                track("AnswerQuestion", { content_name: `Q${current}`, content_category: opt });
                 setTimeout(() => onSelect(opt), 250);
               }}
               className={`w-full text-left p-5 rounded-2xl bg-card border-2 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:cursor-default ${
