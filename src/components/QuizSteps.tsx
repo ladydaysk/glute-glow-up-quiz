@@ -107,9 +107,16 @@ export function QuestionView({
                 if (answered.current) return;
                 answered.current = true;
                 setPicked(opt);
+                // Um evento por pergunta (AnswerQuestionQ1, Q2...) para o funil
+                // aparecer inteiro na Visao geral do Events Manager, sem drill-down.
+                // No GTM um unico acionador com regex `AnswerQuestionQ.*` cobre todos,
+                // e a tag usa a variavel {{Event}} como nome do evento.
                 // A resposta vai em content_category, nao em `value`: no Meta
                 // `value` e valor monetario e alimenta otimizacao/ROAS.
-                track("AnswerQuestion", { content_name: `Q${current}`, content_category: opt });
+                track(`AnswerQuestionQ${current}`, {
+                  content_name: `Q${current}`,
+                  content_category: opt,
+                });
                 setTimeout(() => onSelect(opt), 250);
               }}
               className={`w-full text-left p-5 rounded-2xl bg-card border-2 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:cursor-default ${
