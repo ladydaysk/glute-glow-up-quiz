@@ -7,6 +7,15 @@ import ba4 from "@/assets/transform/before-after-4.webp";
 
 const transformImages = [ba1, ba2, ba3, ba4];
 
+/**
+ * Tira os emojis do texto antes de mandar pro Meta. As opcoes do quiz comecam
+ * com emoji ("⚡ O mais rapido possivel") e ele chega no Events Manager como
+ * caractere quebrado, sujando o relatorio. O botao continua exibindo o emoji.
+ */
+function semEmoji(texto: string) {
+  return texto.replace(/[\p{Extended_Pictographic}️‍]/gu, "").trim();
+}
+
 export function TransformView({ onNext }: { onNext: () => void }) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
@@ -115,7 +124,7 @@ export function QuestionView({
                 // `value` e valor monetario e alimenta otimizacao/ROAS.
                 track(`AnswerQuestionQ${current}`, {
                   content_name: `Q${current}`,
-                  content_category: opt,
+                  content_category: semEmoji(opt),
                 });
                 setTimeout(() => onSelect(opt), 250);
               }}
