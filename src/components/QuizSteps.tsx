@@ -591,7 +591,14 @@ export function OfferView({ name: _name }: { name: string }) {
               });
             }}
             className="block w-full py-6 px-4 rounded-2xl text-white font-extrabold text-xl text-center leading-tight animate-cta-pulse hover:scale-[1.03] active:scale-[0.98] transition-transform"
-            style={{ background: "var(--gradient-primary)" }}
+            style={{
+              background: "var(--gradient-cta)",
+              // Base do anel: os keyframes so pintam box-shadow enquanto a
+              // animacao roda. Animacao tem prioridade sobre style inline,
+              // entao ela sobrescreve isto quando esta ativa.
+              boxShadow:
+                "0 0 0 4px oklch(0.6 0.25 12 / 0.32), 0 10px 30px -12px oklch(0.6 0.25 12 / 0.5)",
+            }}
           >
             QUERO MEU BUMBUM MAIOR AGORA →
           </a>
