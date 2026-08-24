@@ -68,7 +68,14 @@ export default async function handler(req, res) {
     if (!resposta.ok) {
       const detalhe = await resposta.text();
       console.error("[lead] CRM recusou", resposta.status, detalhe.slice(0, 300));
-      res.status(502).json({ error: "crm_recusou" });
+      // Repassa o motivo do CRM ("webhook_key inválido", "pipeline nao
+      // encontrado"...) para dar pra saber qual variavel corrigir. Nao expoe
+      // nenhuma credencial, so a mensagem de validacao do proprio CRM.
+      res.status(502).json({
+        error: "crm_recusou",
+        crm_status: resposta.status,
+        crm_message: detalhe.slice(0, 200),
+      });
       return;
     }
 
