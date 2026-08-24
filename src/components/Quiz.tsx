@@ -164,7 +164,9 @@ export default function Quiz() {
         </Suspense>
       </div>
 
-      {popup && (
+      {/* Nas telas de pergunta e de nome o popup cobria as opcoes de resposta
+          e o teclado, travando a interacao. Prova social so onde nao atrapalha. */}
+      {popup && step.kind !== "question" && step.kind !== "name" && (
         <div className="fixed bottom-5 left-4 sm:left-5 z-50 animate-toast-in">
           <div
             className="rounded-2xl px-4 py-3 flex items-center gap-3 max-w-xs text-white border-2 border-white/30 ring-2 ring-primary/40"
