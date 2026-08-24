@@ -23,9 +23,12 @@ export default async function handler(req, res) {
     return;
   }
 
-  const tenantId = process.env.CRM_TENANT_ID;
-  const webhookKey = process.env.CRM_WEBHOOK_KEY;
-  const pipelineId = process.env.CRM_PIPELINE_ID;
+  // trim obrigatorio: colar o valor no painel da Vercel costuma levar junto
+  // um espaco ou quebra de linha, e o CRM devolve 500 ao comparar um UUID
+  // com lixo no fim. Foi exatamente o que aconteceu na primeira configuracao.
+  const tenantId = (process.env.CRM_TENANT_ID || "").trim();
+  const webhookKey = (process.env.CRM_WEBHOOK_KEY || "").trim();
+  const pipelineId = (process.env.CRM_PIPELINE_ID || "").trim();
 
   if (!tenantId || !webhookKey || !pipelineId) {
     console.error("[lead] variaveis de ambiente do CRM ausentes");
