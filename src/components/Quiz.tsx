@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { track } from "@/lib/fbq";
+import { enviarLead } from "@/lib/crm";
 import { questions, testimonials, type Step } from "./quiz-data";
 
 const QuestionView = lazy(() => import("./QuizSteps").then((m) => ({ default: m.QuestionView })));
@@ -133,9 +134,17 @@ export default function Quiz() {
 
           {step.kind === "name" && (
             <NameView
-              onSubmit={(n) => {
+              onSubmit={(n, telefone) => {
                 setName(n);
-                track("Lead", { content_name: "Quiz Name Submit" });
+                // Telefone e opcional: quem nao preencher avanca igual, e o
+                // parametro deixa medir a taxa de captura no Events Manager.
+                enviarLead(n, telefone);
+                track("Lead", {
+                  content_name: "Quiz Name Submit",
+                  content_category: telefone.replace(/\D/g, "").length >= 10
+                    ? "com telefone"
+                    : "sem telefone",
+                });
                 setStep({ kind: "result" });
               }}
             />

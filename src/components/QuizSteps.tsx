@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { track } from "@/lib/fbq";
+import { formatarTelefone } from "@/lib/crm";
 import ba1 from "@/assets/transform/before-after-1.webp";
 import ba2 from "@/assets/transform/before-after-2.webp";
 import ba3 from "@/assets/transform/before-after-3.webp";
@@ -149,8 +150,9 @@ export function QuestionView({
   );
 }
 
-export function NameView({ onSubmit }: { onSubmit: (name: string) => void }) {
+export function NameView({ onSubmit }: { onSubmit: (name: string, phone: string) => void }) {
   const [v, setV] = useState("");
+  const [tel, setTel] = useState("");
   const submitted = useRef(false);
   return (
     <div className="animate-slide-up flex flex-col pt-4">
@@ -162,6 +164,25 @@ export function NameView({ onSubmit }: { onSubmit: (name: string) => void }) {
         value={v}
         onChange={(e) => setV(e.target.value)}
         placeholder="Digite seu nome"
+        className="w-full p-5 rounded-2xl bg-card border-2 border-border focus:border-primary outline-none text-lg mb-5 transition-colors"
+      />
+
+      <label htmlFor="input-telefone" className="text-foreground font-semibold mb-1">
+        Seu WhatsApp
+      </label>
+      <p className="text-sm text-muted-foreground mb-3 leading-snug">
+        É por onde enviamos o seu{" "}
+        <span className="text-primary font-semibold">plano de treino personalizado</span>, montado a
+        partir das suas respostas.
+      </p>
+      <input
+        id="input-telefone"
+        type="tel"
+        inputMode="numeric"
+        autoComplete="tel"
+        value={tel}
+        onChange={(e) => setTel(formatarTelefone(e.target.value))}
+        placeholder="(11) 99999-9999"
         className="w-full p-5 rounded-2xl bg-card border-2 border-border focus:border-primary outline-none text-lg mb-4 transition-colors"
       />
 
@@ -172,7 +193,7 @@ export function NameView({ onSubmit }: { onSubmit: (name: string) => void }) {
         onClick={() => {
           if (submitted.current) return;
           submitted.current = true;
-          onSubmit(v.trim().split(" ")[0]);
+          onSubmit(v.trim().split(" ")[0], tel);
         }}
         className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ background: "var(--gradient-primary)" }}
