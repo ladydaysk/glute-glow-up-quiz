@@ -590,11 +590,29 @@ export function OfferView({ name: _name }: { name: string }) {
                 value: 57.9,
               });
             }}
-            className="block w-full py-5 rounded-2xl text-white font-bold text-lg text-center shadow-[var(--shadow-soft)] hover:scale-[1.02] active:scale-[0.98] transition-transform ring-2 ring-primary/40"
+            className="block w-full py-6 px-4 rounded-2xl text-white font-extrabold text-xl text-center leading-tight animate-cta-pulse hover:scale-[1.03] active:scale-[0.98] transition-transform"
             style={{ background: "var(--gradient-primary)" }}
           >
             QUERO MEU BUMBUM MAIOR AGORA →
           </a>
+
+          {/* Acesso — tira a duvida de "quando recebo" e "onde assisto" */}
+          <div className="mt-4 rounded-2xl bg-card border border-border p-4">
+            <div className="flex gap-3 items-start">
+              <span className="shrink-0 text-lg leading-6">⚡</span>
+              <p className="text-sm text-foreground leading-snug">
+                <span className="font-bold">Acesso imediato após a compra.</span> Você recebe o
+                login na hora, direto no seu e-mail.
+              </p>
+            </div>
+            <div className="flex gap-3 items-start mt-3 pt-3 border-t border-border">
+              <span className="shrink-0 text-lg leading-6">📱</span>
+              <p className="text-sm text-foreground leading-snug">
+                <span className="font-bold">Assista de onde quiser:</span> celular, computador ou
+                tablet — quantas vezes precisar.
+              </p>
+            </div>
+          </div>
 
           {/* Garantia */}
           <div className="mt-5 rounded-2xl border border-primary/20 bg-card p-5 text-left">
