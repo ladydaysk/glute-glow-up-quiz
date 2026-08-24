@@ -419,10 +419,10 @@ export function OfferView({ name: _name }: { name: string }) {
           </div>
 
           {/* OFERTA PRINCIPAL — anel grosso separa do resto da tela */}
-          <div className="rounded-3xl overflow-hidden mb-[18px] text-left shadow-[var(--shadow-soft)] ring-[3px] ring-primary/55">
-            <div className="px-5 py-[22px] text-white" style={{ background: "var(--gradient-primary)" }}>
+          <div className="rounded-3xl overflow-hidden mb-[18px] text-left shadow-[var(--shadow-soft)] ring-[3px] ring-[oklch(0.6_0.25_12/0.6)]">
+            <div className="px-5 py-[22px] text-white" style={{ background: "var(--gradient-cta)" }}>
               <span className="inline-block text-[10px] uppercase tracking-[0.16em] font-bold rounded-full px-[11px] py-[5px] mb-3 bg-white/25">
-                ⭐ A oferta principal
+                ⭐ Método completo
               </span>
               <h3 className="text-[28px] font-extrabold leading-[1.1] tracking-tight">
                 Método LadyDaysk
@@ -537,8 +537,8 @@ export function OfferView({ name: _name }: { name: string }) {
 
           {/* ECONOMIA */}
           <div
-            className="rounded-3xl px-5 py-[22px] mb-4 text-white text-center shadow-[var(--shadow-soft)]"
-            style={{ background: "var(--gradient-primary)" }}
+            className="rounded-3xl px-5 py-6 mb-4 text-white text-center ring-[3px] ring-[oklch(0.6_0.25_12/0.6)] shadow-[var(--shadow-soft)]"
+            style={{ background: "var(--gradient-cta)" }}
           >
             <div className="flex justify-between text-sm py-[5px]">
               <span>Método</span>
@@ -548,15 +548,13 @@ export function OfferView({ name: _name }: { name: string }) {
               <span>Bônus de hoje</span>
               <s className="opacity-85 tabular-nums">{VALOR_BONUS}</s>
             </div>
-            <div className="h-px bg-white/30 mt-2.5 mb-3.5" />
-            <p className="text-xs uppercase tracking-[0.18em] font-bold opacity-95">
-              Você economiza
-            </p>
-            <p className="text-[40px] font-extrabold leading-[1.05] tracking-tight mt-1 tabular-nums">
+            <div className="h-px bg-white/35 mt-3 mb-4" />
+            <p className="text-[13px] uppercase tracking-[0.2em] font-extrabold">Você economiza</p>
+            <p className="text-[52px] font-extrabold leading-[1] tracking-tight mt-1.5 tabular-nums">
               {ECONOMIA}
             </p>
-            <span className="inline-block bg-white text-[12px] font-extrabold px-3 py-[5px] rounded-full mt-2 tracking-[0.05em] text-[oklch(0.62_0.2_18)]">
-              {DESCONTO} de desconto hoje
+            <span className="inline-block bg-white text-[13px] font-extrabold px-4 py-2 rounded-full mt-3.5 tracking-[0.04em] text-[oklch(0.52_0.26_18)]">
+              🔥 {DESCONTO} de desconto hoje
             </span>
           </div>
 
