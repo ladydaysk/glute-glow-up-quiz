@@ -9,10 +9,12 @@ import {
 } from "@/lib/validacao";
 
 /**
- * Link da planilha entregue apos o cadastro.
- * Trocar aqui quando o arquivo definitivo estiver no Drive.
+ * A planilha e servida pelo proprio site (public/downloads), nao pelo Drive:
+ * sem link que expira, sem depender de permissao de compartilhamento.
+ * `downloads/` esta fora da rewrite do vercel.json — se sair de la, o arquivo
+ * passa a devolver o HTML do site em vez do PDF.
  */
-const LINK_PLANILHA = "https://drive.google.com/drive/folders/COLE-O-LINK-AQUI";
+const LINK_PLANILHA = "/downloads/planilha-de-treino-ladydaysk.pdf";
 
 type Erros = { nome?: string; telefone?: string; instagram?: string };
 
