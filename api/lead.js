@@ -55,6 +55,20 @@ export default async function handler(req, res) {
     return;
   }
 
+  const instagram = String(body?.instagram || "")
+    .trim()
+    .slice(0, 100);
+  // Identifica de qual formulario o lead veio (quiz, planilha gratuita...).
+  const origem = String(body?.origem || "")
+    .trim()
+    .slice(0, 100);
+  // Honeypot: campo escondido que so robo preenche. O CRM finge sucesso e
+  // nao grava nada — mesmo comportamento dos formularios da Shark.
+  const hp = String(body?._hp || "").trim();
+
+  const customFields = {};
+  if (instagram) customFields.instagram = instagram;
+
   try {
     const resposta = await fetch(CRM_URL, {
       method: "POST",
@@ -65,6 +79,9 @@ export default async function handler(req, res) {
         pipeline_id: pipelineId,
         name,
         phone,
+        _hp: hp,
+        ...(origem ? { source_campaign: origem } : {}),
+        ...(Object.keys(customFields).length ? { custom_fields: customFields } : {}),
       }),
     });
 
