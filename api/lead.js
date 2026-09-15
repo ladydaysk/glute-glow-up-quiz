@@ -17,6 +17,45 @@ function normalizarTelefone(bruto) {
   return null; // fora de qualquer formato brasileiro valido
 }
 
+/**
+ * Aviso no WhatsApp da Dayane via CallMeBot. Roda depois que o CRM aceitou o
+ * lead e nunca segura a resposta: se o bot cair, o lead ja esta salvo e a
+ * pessoa segue o funil normalmente. Timeout curto porque a Vercel encerra a
+ * funcao junto com a resposta.
+ */
+async function avisarWhatsApp({ name, phone, instagram, origem }) {
+  const destino = (process.env.CALLMEBOT_PHONE || "").trim();
+  const apikey = (process.env.CALLMEBOT_APIKEY || "").trim();
+  if (!destino || !apikey) return; // sem configurar, simplesmente nao avisa
+
+  const ddd = phone.slice(2, 4);
+  const numero = phone.slice(4);
+  const bonito = `(${ddd}) ${numero.slice(0, numero.length - 4)}-${numero.slice(-4)}`;
+
+  const linhas = [
+    `🔔 Novo lead — ${origem}`,
+    `👤 ${name}`,
+    `📱 ${bonito}`,
+    ...(instagram ? [`📸 ${instagram}`] : []),
+    `💬 wa.me/${phone}`,
+  ];
+
+  const url =
+    "https://api.callmebot.com/whatsapp.php?phone=" +
+    encodeURIComponent(destino) +
+    "&apikey=" +
+    encodeURIComponent(apikey) +
+    "&text=" +
+    encodeURIComponent(linhas.join("\n"));
+
+  try {
+    const r = await fetch(url, { signal: AbortSignal.timeout(6000) });
+    if (!r.ok) console.error("[lead] callmebot respondeu", r.status);
+  } catch (erro) {
+    console.error("[lead] callmebot falhou", erro?.message || erro);
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "method_not_allowed" });
@@ -97,6 +136,12 @@ export default async function handler(req, res) {
         crm_message: detalhe.slice(0, 200),
       });
       return;
+    }
+
+    // Robo pego pelo honeypot: o CRM fingiu sucesso e nao gravou; aqui
+    // tambem nao avisa, senao o WhatsApp vira lixeira de spam.
+    if (!hp) {
+      await avisarWhatsApp({ name, phone, instagram, origem: origem || "Quiz" });
     }
 
     res.status(200).json({ ok: true });
