@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { track } from "@/lib/fbq";
 import { formatarTelefone } from "@/lib/crm";
+import { avisarWhatsApp } from "@/lib/whatsapp";
 import {
   instagramInvalido,
   nomeInvalido,
@@ -48,6 +49,15 @@ export default function PlanilhaForm() {
     setEnviando(true);
 
     track("Lead", { content_name: "Planilha Gratuita" });
+
+    if (!hp) {
+      avisarWhatsApp({
+        name: nome,
+        phone: telefone,
+        instagram: normalizarInstagram(instagram),
+        origem: "Planilha Gratuita",
+      });
+    }
 
     try {
       await fetch("/api/lead", {

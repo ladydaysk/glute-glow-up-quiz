@@ -1,5 +1,8 @@
+import { avisarWhatsApp } from "./whatsapp";
+
 /**
- * Manda o lead pro CRM atraves de /api/lead (a chave fica no servidor).
+ * Manda o lead pro CRM atraves de /api/lead (a chave fica no servidor) e
+ * avisa a Dayane no WhatsApp.
  *
  * Nunca lanca e nunca segura o funil: se o CRM cair, a pessoa continua
  * vendo o resultado do quiz normalmente.
@@ -11,11 +14,13 @@ export function enviarLead(name: string, phone: string) {
   // 10 ou 11 digitos = DDD + numero; 12 ou 13 = ja veio com o 55.
   if (!name.trim() || digitos.length < 10 || digitos.length > 13) return;
 
+  avisarWhatsApp({ name, phone: digitos, origem: "Quiz" });
+
   try {
     void fetch("/api/lead", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ name: name.trim(), phone: digitos }),
+      body: JSON.stringify({ name: name.trim(), phone: digitos, origem: "Quiz" }),
       // a pessoa avanca de tela na mesma hora; keepalive evita que o
       // navegador cancele a requisicao no meio.
       keepalive: true,
