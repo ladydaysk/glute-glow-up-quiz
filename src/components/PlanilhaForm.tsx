@@ -16,6 +16,8 @@ import {
  * passa a devolver o HTML do site em vez do PDF.
  */
 const LINK_PLANILHA = "/downloads/planilha-de-treino-ladydaysk.pdf";
+// Upsell na tela de "pronto": landing do metodo. utm pra separar no Meta/GTM.
+const LINK_METODO = "https://www.ladydaysk.online/?utm_source=planilha&utm_medium=upsell";
 
 type Erros = { nome?: string; telefone?: string; instagram?: string };
 
@@ -78,39 +80,76 @@ export default function PlanilhaForm() {
 
     setEnviando(false);
     setPronto(true);
+    baixarPlanilha();
+  }
+
+  /**
+   * Dispara o download na hora, sem tela intermediaria. O `download` funciona
+   * porque o PDF e do mesmo dominio; em iPhone o Safari abre o PDF em vez de
+   * salvar, por isso o link de "baixar de novo" continua na tela.
+   */
+  function baixarPlanilha() {
+    track("ViewContent", { content_name: "Planilha Baixada" });
+    const a = document.createElement("a");
+    a.href = LINK_PLANILHA;
+    a.download = "planilha-de-treino-ladydaysk.pdf";
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
 
   if (pronto) {
     return (
       <div className="w-full max-w-md mx-auto animate-pop-in text-center">
-        <div className="text-6xl mb-4">🎉</div>
-        <h1 className="text-3xl font-bold text-foreground leading-tight mb-3">
+        <div className="text-5xl mb-3">🎉</div>
+        <h1 className="text-3xl font-bold text-foreground leading-tight mb-2">
           Prontinho, {nome.trim().split(" ")[0]}!
         </h1>
-        <p className="text-muted-foreground mb-8">
-          Sua planilha de treinos está liberada. É só clicar no botão abaixo.
+        <p className="text-muted-foreground leading-snug">
+          Sua planilha já está baixando.{" "}
+          <a
+            id="btn-baixar-planilha"
+            data-track="baixar_planilha"
+            href={LINK_PLANILHA}
+            download="planilha-de-treino-ladydaysk.pdf"
+            className="underline underline-offset-2 text-foreground font-semibold"
+          >
+            Não baixou? Clique aqui.
+          </a>
         </p>
 
-        <a
-          id="btn-baixar-planilha"
-          data-track="baixar_planilha"
-          href={LINK_PLANILHA}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => track("ViewContent", { content_name: "Planilha Baixada" })}
-          className="block w-full py-6 px-4 rounded-2xl text-white font-extrabold text-xl text-center leading-tight animate-cta-pulse hover:scale-[1.03] active:scale-[0.98] transition-transform"
+        {/* Upsell: agora e o destaque da tela, porque a planilha ja foi
+            entregue sem a pessoa precisar clicar em nada. */}
+        <div
+          className="mt-8 rounded-3xl p-6 text-left text-white relative overflow-hidden"
           style={{
-            background: "var(--gradient-cta)",
-            boxShadow:
-              "0 0 0 4px oklch(0.6 0.25 12 / 0.32), 0 10px 30px -12px oklch(0.6 0.25 12 / 0.5)",
+            background: "linear-gradient(135deg, oklch(0.55 0.26 12) 0%, oklch(0.62 0.24 350) 100%)",
+            boxShadow: "0 20px 50px -20px oklch(0.55 0.26 12 / 0.7)",
           }}
         >
-          ACESSAR MINHA PLANILHA →
-        </a>
-
-        <p className="text-sm text-muted-foreground mt-6 leading-snug">
-          Salve o link nos favoritos — a planilha fica disponível pra você usar quando quiser.
-        </p>
+          <span className="inline-block text-[11px] uppercase tracking-[0.25em] font-bold bg-white/20 rounded-full px-3 py-1">
+            A planilha é só o começo
+          </span>
+          <h2 className="text-2xl font-extrabold leading-tight mt-3 mb-2">
+            Magra e não consegue crescer o glúteo?
+          </h2>
+          <p className="text-white/90 leading-snug mb-5">
+            A planilha te dá o treino. O <strong>Método Ladydaysk</strong> te dá o plano
+            completo… treino, alimentação, constância e tudo que você precisa para ter
+            resultados de verdade e parar de desistir no meio do caminho 💪🍑
+          </p>
+          <a
+            id="btn-upsell-metodo"
+            data-track="upsell_metodo"
+            href={LINK_METODO}
+            onClick={() => track("UpsellMetodoClick", { content_name: "Planilha → Método" })}
+            className="block w-full py-5 px-4 rounded-2xl bg-white text-primary font-extrabold text-lg text-center leading-tight animate-cta-pulse hover:scale-[1.03] active:scale-[0.98] transition-transform"
+            style={{ boxShadow: "0 0 0 4px rgba(255,255,255,.3), 0 12px 30px -10px rgba(0,0,0,.4)" }}
+          >
+            QUERO O PLANO COMPLETO PRA CRESCER →
+          </a>
+        </div>
       </div>
     );
   }
