@@ -50,6 +50,10 @@ export default function PlanilhaForm() {
     enviado.current = true;
     setEnviando(true);
 
+    // De proposito NAO abre o PDF sozinho: no navegador interno do Instagram
+    // (de onde vem o trafego) nao existe "outra aba" nem download em segundo
+    // plano — abrir automatico joga a pessoa pro PDF antes de ela ver a
+    // oferta. A tela seguinte entrega os dois botoes e ela escolhe.
     track("Lead", { content_name: "Planilha Gratuita" });
 
     if (!hp) {
@@ -80,23 +84,6 @@ export default function PlanilhaForm() {
 
     setEnviando(false);
     setPronto(true);
-    baixarPlanilha();
-  }
-
-  /**
-   * Dispara o download na hora, sem tela intermediaria. O `download` funciona
-   * porque o PDF e do mesmo dominio; em iPhone o Safari abre o PDF em vez de
-   * salvar, por isso o link de "baixar de novo" continua na tela.
-   */
-  function baixarPlanilha() {
-    track("ViewContent", { content_name: "Planilha Baixada" });
-    const a = document.createElement("a");
-    a.href = LINK_PLANILHA;
-    a.download = "planilha-de-treino-ladydaysk.pdf";
-    a.rel = "noopener";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
   }
 
   if (pronto) {
@@ -106,18 +93,21 @@ export default function PlanilhaForm() {
         <h1 className="text-3xl font-bold text-foreground leading-tight mb-2">
           Prontinho, {nome.trim().split(" ")[0]}!
         </h1>
-        <p className="text-muted-foreground leading-snug">
-          Sua planilha já está baixando.{" "}
-          <a
-            id="btn-baixar-planilha"
-            data-track="baixar_planilha"
-            href={LINK_PLANILHA}
-            download="planilha-de-treino-ladydaysk.pdf"
-            className="underline underline-offset-2 text-foreground font-semibold"
-          >
-            Não baixou? Clique aqui.
-          </a>
+        <p className="text-muted-foreground leading-snug mb-5">
+          Sua planilha de treinos está liberada:
         </p>
+        <a
+          id="btn-baixar-planilha"
+          data-track="baixar_planilha"
+          href={LINK_PLANILHA}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => track("ViewContent", { content_name: "Planilha Baixada" })}
+          className="block w-full py-5 px-4 rounded-2xl text-white font-extrabold text-lg text-center leading-tight hover:scale-[1.02] active:scale-[0.98] transition-transform"
+          style={{ background: "var(--gradient-cta)", boxShadow: "var(--shadow-soft)" }}
+        >
+          📄 BAIXAR MINHA PLANILHA
+        </a>
 
         {/* Upsell: agora e o destaque da tela, porque a planilha ja foi
             entregue sem a pessoa precisar clicar em nada. */}
