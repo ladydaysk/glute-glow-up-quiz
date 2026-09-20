@@ -4,14 +4,14 @@ import { track } from "@/lib/fbq";
 /**
  * Roleta de desconto. Aparece uma vez na tela da oferta, alguns segundos
  * depois que a pessoa abre os entregaveis. Ela pode girar ou fechar; se girar,
- * SEMPRE cai no 10% — as outras fatias existem so pra dar emocao ao giro.
+ * SEMPRE cai no 20% — as outras fatias existem so pra dar emocao ao giro.
  */
-export const CUPOM = "LADY10";
-export const DESCONTO_PCT = 10;
+export const CUPOM = "LADY20";
+export const DESCONTO_PCT = 20;
 
 // Fatias em ordem horaria a partir do topo. A vencedora e fixa.
-const FATIAS = ["5%", "20%", "10%", "15%", "30%", "10%", "25%", "10%"];
-const FATIA_VENCEDORA = 2; // indice em FATIAS (a primeira "10%")
+const FATIAS = ["5%", "10%", "20%", "15%", "30%", "20%", "25%", "20%"];
+const FATIA_VENCEDORA = 2; // indice em FATIAS (a primeira "20%")
 const CORES = ["#f43f7a", "#ffd6e2", "#e11d5b", "#ffe9f0", "#f43f7a", "#ffd6e2", "#e11d5b", "#ffe9f0"];
 
 type Props = {
