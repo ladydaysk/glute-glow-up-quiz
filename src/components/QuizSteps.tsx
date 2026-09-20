@@ -307,29 +307,23 @@ export function SocialView({
   );
 }
 
-const CHECKOUT_URL = "https://pay.kiwify.com.br/gM257BR";
+const CHECKOUT_URL = "https://pay.kiwify.com.br/Ph01JUr";
 
-/** Oferta principal. Os itens somam R$ 197 — o mesmo "valor antigo" do checkout. */
-const METODO = [
+/** Oferta principal — o que vem dentro do Projeto Tanajura. */
+const PACOTE = [
+  {
+    emoji: "🎥",
+    titulo: "Aulas gravadas",
+    texto:
+      "O treino de glúteo gravado, exercício por exercício, pra você assistir e executar certo.",
+    valor: "R$ 97",
+  },
   {
     emoji: "🏋️",
     titulo: "Treino na Academia",
     texto:
       "Do iniciante ao avançado, com progressão de carga semana a semana. Você entra e já tem seu Plano de Ação do Dia 1.",
-    valor: "R$ 97",
-  },
-  {
-    emoji: "🍽️",
-    titulo: "Alimentação para ganho de massa",
-    texto:
-      "Cardápio, planilha de alimentação e planner de dieta — o combustível calibrado pra crescer.",
-    valor: "R$ 47",
-  },
-  {
-    emoji: "🍑",
-    titulo: "Ativação de Glúteo",
-    texto: "O que faz o glúteo realmente trabalhar. Sem isso a perna cresce no lugar do bumbum.",
-    valor: "R$ 27",
+    valor: "R$ 67",
   },
   {
     emoji: "📋",
@@ -345,46 +339,26 @@ const METODO = [
   },
 ];
 
-/** Bonus — somam R$ 155, quase 3x o preco de hoje. */
+/** Bonus — entram de graca por cima do pacote. */
 const BONUS = [
   {
-    emoji: "🔥",
-    titulo: "Projeto Tanajura",
-    texto: "O treino gravado focado em volume de glúteo — o queridinho das alunas.",
-    valor: "R$ 57",
-    destaque: true,
+    emoji: "🍽️",
+    titulo: "Alimentação para ganho de massa",
+    texto: "Cardápio, planilha de alimentação e planner de dieta — o combustível calibrado pra crescer.",
+    valor: "R$ 47",
   },
   {
-    emoji: "🏠",
-    titulo: "Treino em casa",
-    texto: "Todos os níveis com só uma mini band.",
-    valor: "R$ 37",
-  },
-  {
-    emoji: "🥗",
-    titulo: "+500 receitas fit e Seca Barriga",
-    texto: "Pra manter constância e reduzir inchaço.",
+    emoji: "🍑",
+    titulo: "Ativação de Glúteo",
+    texto: "O que faz o glúteo realmente trabalhar. Sem isso a perna cresce no lugar do bumbum.",
     valor: "R$ 27",
-  },
-  {
-    emoji: "🧠",
-    titulo: "Planilha Mentalidade",
-    texto: "A disciplina que faz você não parar na segunda semana.",
-    valor: "R$ 17",
-  },
-  {
-    emoji: "💬",
-    titulo: "Grupo VIP no WhatsApp",
-    texto: "Suporte direto e dicas diárias. Vagas limitadas.",
-    valor: "R$ 17",
   },
 ];
 
-const VALOR_METODO = "R$ 197";
-const VALOR_BONUS = "R$ 155";
-/** R$ 352 (197 + 155) menos os R$ 57,90 de hoje. */
-const ECONOMIA = "R$ 294";
-const DESCONTO = "84%";
+/** Soma dos itens do pacote (97 + 67 + 17 + 9). */
+const VALOR_PACOTE = "R$ 190";
+/** Soma dos bonus (47 + 27). */
+const VALOR_BONUS = "R$ 74";
 
 export function OfferView({ name: _name }: { name: string }) {
   const [opened, setOpened] = useState(false);
@@ -443,28 +417,28 @@ export function OfferView({ name: _name }: { name: string }) {
           <div className="rounded-3xl overflow-hidden mb-[18px] text-left shadow-[var(--shadow-soft)] ring-[3px] ring-[oklch(0.6_0.25_12/0.6)]">
             <div className="px-5 py-[22px] text-white" style={{ background: "var(--gradient-cta)" }}>
               <span className="inline-block text-[10px] uppercase tracking-[0.16em] font-bold rounded-full px-[11px] py-[5px] mb-3 bg-white/25">
-                ⭐ Método completo
+                🔥 Treino focado em glúteo
               </span>
               <h3 className="text-[28px] font-extrabold leading-[1.1] tracking-tight">
-                Método LadyDaysk
+                Projeto Tanajura
               </h3>
               <p className="text-sm opacity-95 mt-1.5">
-                Treino completo, alimentação e glúteo — o sistema inteiro.
+                O treino gravado focado em volume de glúteo — o queridinho das alunas.
               </p>
               <div className="flex items-baseline justify-between mt-4 pt-3.5 border-t border-white/30">
-                <span className="text-[13px] opacity-90">valor do método</span>
-                <span className="text-[22px] font-extrabold line-through">{VALOR_METODO}</span>
+                <span className="text-[13px] opacity-90">valor do projeto</span>
+                <span className="text-[22px] font-extrabold line-through">{VALOR_PACOTE}</span>
               </div>
             </div>
 
             <div className="bg-card px-5 pt-1.5 pb-5">
               <div className="flex items-center gap-2 pt-4 pb-1 text-xs font-bold uppercase tracking-[0.1em] text-muted-foreground">
-                <span>{METODO.length} entregáveis</span>
+                <span>{PACOTE.length} entregáveis</span>
                 <span className="flex-1 h-px bg-border" />
               </div>
 
               <ul>
-                {METODO.map((item) => (
+                {PACOTE.map((item) => (
                   <li
                     key={item.titulo}
                     className="flex gap-3 py-[15px] border-b border-border last:border-b-0"
@@ -506,31 +480,15 @@ export function OfferView({ name: _name }: { name: string }) {
               <p className="text-[19px] font-extrabold text-foreground mt-1.5">
                 + {BONUS.length} bônus liberados
               </p>
-              <span className="inline-block mt-2.5 mb-4 bg-primary text-white text-[11.5px] font-extrabold uppercase tracking-[0.06em] px-3.5 py-[7px] rounded-full">
-                ⏳ Só para quem entrar hoje
-              </span>
             </div>
 
-            <ul className="space-y-[9px]">
+            <ul className="space-y-[9px] mt-4">
               {BONUS.map((item) => (
-                <li
-                  key={item.titulo}
-                  className={`bg-card rounded-2xl px-3.5 py-3 flex gap-[11px] ${
-                    item.destaque ? "border-2 border-primary shadow-[var(--shadow-soft)]" : ""
-                  }`}
-                >
+                <li key={item.titulo} className="bg-card rounded-2xl px-3.5 py-3 flex gap-[11px]">
                   <span className="shrink-0 h-[30px] w-[30px] rounded-[10px] grid place-items-center text-[15px] bg-rose/55">
                     {item.emoji}
                   </span>
                   <div className="flex-1 min-w-0">
-                    {item.destaque && (
-                      <span
-                        className="inline-block text-[10px] uppercase tracking-[0.14em] font-extrabold text-white rounded-full px-2.5 py-1 mb-[7px]"
-                        style={{ background: "var(--gradient-primary)" }}
-                      >
-                        ⭐ Destaque
-                      </span>
-                    )}
                     <div className="flex gap-2.5 items-baseline justify-between">
                       <p className="font-bold text-[15px] text-foreground leading-snug">
                         {item.titulo}
@@ -556,39 +514,16 @@ export function OfferView({ name: _name }: { name: string }) {
             </div>
           </div>
 
-          {/* ECONOMIA */}
-          <div
-            className="rounded-3xl px-5 py-6 mb-4 text-white text-center ring-[3px] ring-[oklch(0.6_0.25_12/0.6)] shadow-[var(--shadow-soft)]"
-            style={{ background: "var(--gradient-cta)" }}
-          >
-            <div className="flex justify-between text-sm py-[5px]">
-              <span>Método</span>
-              <s className="opacity-85 tabular-nums">{VALOR_METODO}</s>
-            </div>
-            <div className="flex justify-between text-sm py-[5px]">
-              <span>Bônus de hoje</span>
-              <s className="opacity-85 tabular-nums">{VALOR_BONUS}</s>
-            </div>
-            <div className="h-px bg-white/35 mt-3 mb-4" />
-            <p className="text-[13px] uppercase tracking-[0.2em] font-extrabold">Você economiza</p>
-            <p className="text-[52px] font-extrabold leading-[1] tracking-tight mt-1.5 tabular-nums">
-              {ECONOMIA}
-            </p>
-            <span className="inline-block bg-white text-[13px] font-extrabold px-4 py-2 rounded-full mt-3.5 tracking-[0.04em] text-[oklch(0.52_0.26_18)]">
-              🔥 {DESCONTO} de desconto hoje
-            </span>
-          </div>
-
           {/* Preco */}
           <div className="rounded-3xl bg-card border-2 border-primary p-5 mb-3.5 text-center">
             <p className="text-[11px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
               Seu acesso hoje
             </p>
             <p className="text-[38px] font-extrabold leading-[1.05] tracking-tight mt-2 text-foreground">
-              7x <span className="text-xl">de</span> R$ 9,47
+              R$ 47,90
             </p>
             <p className="text-[13.5px] text-muted-foreground mt-2">
-              ou R$ 57,90 à vista · acesso vitalício
+              à vista ou parcelado no cartão · acesso vitalício
             </p>
           </div>
 
@@ -606,7 +541,7 @@ export function OfferView({ name: _name }: { name: string }) {
               track("InitiateCheckout", {
                 content_name: "Oferta CTA",
                 currency: "BRL",
-                value: 57.9,
+                value: 47.9,
               });
             }}
             className="block w-full py-6 px-4 rounded-2xl text-white font-extrabold text-xl text-center leading-tight animate-cta-pulse hover:scale-[1.03] active:scale-[0.98] transition-transform"
