@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { track } from "@/lib/fbq";
 import { formatarTelefone } from "@/lib/crm";
+import Roleta, { CUPOM, DESCONTO_PCT } from "@/components/Roleta";
 import ba1 from "@/assets/transform/before-after-1.webp";
 import ba2 from "@/assets/transform/before-after-2.webp";
 import ba3 from "@/assets/transform/before-after-3.webp";
@@ -308,6 +309,10 @@ export function SocialView({
 }
 
 const CHECKOUT_URL = "https://pay.kiwify.com.br/Ph01JUr";
+const ROLETA_DELAY_MS = 15_000;
+const PRECO = 47.9;
+const PRECO_COM_CUPOM = Math.round(PRECO * (1 - DESCONTO_PCT / 100) * 100) / 100;
+const fmt = (v: number) => v.toFixed(2).replace(".", ",");
 
 /** Oferta principal — o que vem dentro do Projeto Tanajura. */
 const PACOTE = [
@@ -368,6 +373,11 @@ export function OfferView({ name: _name }: { name: string }) {
   const checkoutTracked = useRef(false);
   const offerTracked = useRef(false);
 
+  // Roleta: sobe 15s depois que a pessoa abre os entregaveis, uma vez so.
+  const [roletaAberta, setRoletaAberta] = useState(false);
+  const [cupomGanho, setCupomGanho] = useState(false);
+  const roletaMostrada = useRef(false);
+
   useEffect(() => {
     if (!opened) return;
     const t = setTimeout(() => {
@@ -377,8 +387,25 @@ export function OfferView({ name: _name }: { name: string }) {
     return () => clearTimeout(t);
   }, [opened]);
 
+  useEffect(() => {
+    if (!opened || roletaMostrada.current) return;
+    const t = setTimeout(() => {
+      roletaMostrada.current = true;
+      setRoletaAberta(true);
+    }, ROLETA_DELAY_MS);
+    return () => clearTimeout(t);
+  }, [opened]);
+
+  // Cupom vai na URL: a Kiwify aplica sozinha no checkout.
+  const checkoutHref = cupomGanho ? `${CHECKOUT_URL}?coupon=${CUPOM}` : CHECKOUT_URL;
+
   return (
     <div className="animate-fade-in pt-6 flex flex-col items-center text-center">
+      <Roleta
+        aberta={roletaAberta}
+        onFechar={() => setRoletaAberta(false)}
+        onGanhou={() => setCupomGanho(true)}
+      />
       <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
         SEU PLANO ESTÁ PRONTO
       </span>
@@ -519,9 +546,21 @@ export function OfferView({ name: _name }: { name: string }) {
             <p className="text-[11px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
               Seu acesso hoje
             </p>
-            <p className="text-[38px] font-extrabold leading-[1.05] tracking-tight mt-2 text-foreground">
-              R$ 47,90
-            </p>
+            {cupomGanho ? (
+              <>
+                <p className="text-sm text-muted-foreground line-through mt-2">R$ {fmt(PRECO)}</p>
+                <p className="text-[38px] font-extrabold leading-[1.05] tracking-tight text-foreground">
+                  R$ {fmt(PRECO_COM_CUPOM)}
+                </p>
+                <span className="inline-block mt-2 bg-primary text-white text-[11.5px] font-extrabold uppercase tracking-[0.06em] px-3.5 py-[7px] rounded-full">
+                  🎉 cupom {CUPOM} aplicado · −{DESCONTO_PCT}%
+                </span>
+              </>
+            ) : (
+              <p className="text-[38px] font-extrabold leading-[1.05] tracking-tight mt-2 text-foreground">
+                R$ {fmt(PRECO)}
+              </p>
+            )}
             <p className="text-[13.5px] text-muted-foreground mt-2">
               à vista ou parcelado no cartão · acesso vitalício
             </p>
@@ -530,7 +569,7 @@ export function OfferView({ name: _name }: { name: string }) {
           <a
             id="btn-checkout"
             data-track="initiate_checkout"
-            href={CHECKOUT_URL}
+            href={checkoutHref}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
@@ -541,7 +580,7 @@ export function OfferView({ name: _name }: { name: string }) {
               track("InitiateCheckout", {
                 content_name: "Oferta CTA",
                 currency: "BRL",
-                value: 47.9,
+                value: cupomGanho ? PRECO_COM_CUPOM : PRECO,
               });
             }}
             className="block w-full py-6 px-4 rounded-2xl text-white font-extrabold text-xl text-center leading-tight animate-cta-pulse hover:scale-[1.03] active:scale-[0.98] transition-transform"
