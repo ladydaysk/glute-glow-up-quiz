@@ -553,8 +553,11 @@ export function OfferView({ name: _name }: { name: string }) {
                   R$ {fmt(PRECO_COM_CUPOM)}
                 </p>
                 <span className="inline-block mt-2 bg-primary text-white text-[11.5px] font-extrabold uppercase tracking-[0.06em] px-3.5 py-[7px] rounded-full">
-                  🎉 cupom {CUPOM} aplicado · −{DESCONTO_PCT}%
+                  🎉 −{DESCONTO_PCT}% com o cupom {CUPOM}
                 </span>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Digite <strong className="text-foreground">{CUPOM}</strong> no campo de cupom na tela de pagamento
+                </p>
               </>
             ) : (
               <p className="text-[38px] font-extrabold leading-[1.05] tracking-tight mt-2 text-foreground">

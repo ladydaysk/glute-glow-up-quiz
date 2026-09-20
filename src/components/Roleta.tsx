@@ -156,7 +156,8 @@ export default function Roleta({ aberta, onFechar, onGanhou }: Props) {
               Você ganhou {DESCONTO_PCT}% de desconto!
             </h3>
             <p className="text-sm text-muted-foreground mt-1.5">
-              O cupom já vai aplicado quando você clicar em comprar.
+              Copie o cupom e cole no campo <strong className="text-foreground">"Cupom de desconto"</strong> na
+              tela de pagamento.
             </p>
 
             <button
@@ -172,7 +173,7 @@ export default function Roleta({ aberta, onFechar, onGanhou }: Props) {
                 {CUPOM}
               </span>
               <span className="block text-xs text-muted-foreground mt-1">
-                {copiado ? "✓ copiado!" : "toque pra copiar"}
+                {copiado ? "✓ copiado! agora é só colar no pagamento" : "toque pra copiar"}
               </span>
             </button>
 
